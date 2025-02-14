@@ -1,0 +1,24 @@
+<!-- filepath: /mnt/Windows-SSD/Users/yvavi/yeet/coding/ruby/insta_clone/app/views/profiles/confirm.html.erb -->
+<h2>Confirm Profile</h2>
+
+<%= form_for(@profile, url: update_oauth_profile_path(provider: params[:provider])) do |f| %>
+  <% if @profile.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@profile.errors.count, "error") %> prohibited this profile from being saved:</h2>
+      <ul>
+        <% @profile.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :username %><br />
+    <%= f.text_field :username %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Confirm Profile" %>
+  </div>
+<% end %>
