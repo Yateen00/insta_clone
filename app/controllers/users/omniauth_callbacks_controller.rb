@@ -7,7 +7,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   # You should also create an action method in this controller like this:
   # def twitter
   # end
-
+  skip_before_action :verify_authenticity_token, only: [:github, :google_oauth2]
   # More info at:
   # https://github.com/heartcombo/devise#omniauth
 

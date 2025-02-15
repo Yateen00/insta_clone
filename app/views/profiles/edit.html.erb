@@ -1,11 +1,10 @@
-<!-- filepath: /mnt/Windows-SSD/Users/yvavi/yeet/coding/ruby/insta_clone/app/views/profiles/edit.html.erb -->
-<h2>Edit Profile</h2>
+<h2 class="text-2xl font-bold mb-4">Edit Profile</h2>
 
-<%= form_for(@profile) do |f| %>
+<%= form_for(@profile, html: { class: "space-y-6" }) do |f| %>
   <% if @profile.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@profile.errors.count, "error") %> prohibited this profile from being saved:</h2>
-      <ul>
+    <div id="error_explanation" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
+      <h2 class="font-bold mb-2"><%= pluralize(@profile.errors.count, "error") %> prohibited this profile from being saved:</h2>
+      <ul class="list-disc list-inside">
         <% @profile.errors.full_messages.each do |message| %>
           <li><%= message %></li>
         <% end %>
@@ -14,30 +13,33 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :username %><br />
-    <%= f.text_field :username %>
+    <%= f.label :username, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_field :username, class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
   </div>
 
   <% if current_user.provider.blank? %>
-    <%= form_for(current_user) do |u| %>
+    <%= form_for(current_user, html: { class: "space-y-6" }) do |u| %>
       <div class="field">
-        <%= u.label :email %><br />
-        <%= u.email_field :email %>
+        <%= u.label :email, class: "block text-sm font-medium text-gray-700" %>
+        <%= u.email_field :email, class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
       </div>
 
       <div class="field">
-        <%= u.label :password %><br />
-        <%= u.password_field :password %>
+        <%= u.label :password, class: "block text-sm font-medium text-gray-700" %>
+        <%= u.password_field :password, class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
       </div>
 
       <div class="field">
-        <%= u.label :password_confirmation %><br />
-        <%= u.password_field :password_confirmation %>
+        <%= u.label :password_confirmation, class: "block text-sm font-medium text-gray-700" %>
+        <%= u.password_field :password_confirmation, class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
       </div>
     <% end %>
+    <div class="text-red-600 hover:text-red-800">Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
+  <% else %>
+    <div class="text-red-600 hover:text-red-800">Unhappy? <%= link_to "Cancel sign up", cancel_user_registration_path %></div>
   <% end %>
 
   <div class="actions">
-    <%= f.submit "Update Profile" %>
+    <%= f.submit "Update Profile", class: "w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
   </div>
 <% end %>

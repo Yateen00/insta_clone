@@ -22,12 +22,16 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <main class="container mx-auto mt-28 px-5 flex">
+  <body class="bg-gray-100 text-gray-900">
+    <p class="notice text-green-600"><%= notice %></p>
+    <p class="alert text-red-600"><%= alert %></p>
+    <main class="container mx-auto mt-10 px-4">
       <%= yield %>
-      <p class="notice"><%= notice %></p>
-      <p class="alert"><%= alert %></p>
 
+      <% if user_signed_in? %>
+        <%= link_to "Edit Profile", edit_profile_path(current_user.profile), class: "text-indigo-600 hover:text-indigo-800" %>
+        <%= link_to "Log out", destroy_user_session_path, method: :delete, data: { turbo_method: :delete, confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, class: "text-indigo-600 hover:text-indigo-800" %>
+      <% end %>
     </main>
   </body>
 </html>

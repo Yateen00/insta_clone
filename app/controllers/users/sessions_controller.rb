@@ -7,7 +7,6 @@ class Users::SessionsController < Devise::SessionsController
   # def new
   #   super
   # end
-  before_action :check_omniauth_user, only: [:create]
 
   private
     def check_omniauth_user

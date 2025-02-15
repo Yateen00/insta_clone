@@ -3,8 +3,10 @@ Rails.application.routes.draw do
     registrations: "users/registrations",
     omniauth_callbacks: "users/omniauth_callbacks",
     sessions: "users/sessions"
-  }
-
+  }, skip: [:edit,:update]
+  # devise_scope :user do
+  #   delete "sign_out", to: "devise/sessions#destroy", as: :destroy_user_session
+  # end
   resource :profile, only: [:edit, :update] do
     collection do
       get "confirm"
