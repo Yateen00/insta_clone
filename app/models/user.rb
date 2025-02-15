@@ -12,7 +12,7 @@ class User < ApplicationRecord
 
 
   validate :validate_username
-
+  after_create :send_welcome_email
   def validate_username
     if User.where(email: username).exists?
       errors.add(:username, :invalid)
@@ -35,5 +35,8 @@ class User < ApplicationRecord
   private
     def create_profile
       Profile.create(user: self) unless self.profile
+    end
+    def send_welcome_email
+      UserMailer.welcome_email(self).deliver_now
     end
 end
