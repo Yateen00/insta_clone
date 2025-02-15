@@ -7,6 +7,7 @@ class Users::SessionsController < Devise::SessionsController
   # def new
   #   super
   # end
+  layout "form"
 
   private
     def check_omniauth_user
