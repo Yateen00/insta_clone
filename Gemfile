@@ -72,3 +72,7 @@ gem "omniauth-github", "~> 2.0"
 gem "omniauth-google-oauth2", "~> 1.2"
 
 gem "responders", "~> 3.1"
+
+gem "carrierwave", "~> 3.1"
+
+gem "mini_magick", "~> 5.1"

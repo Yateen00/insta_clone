@@ -8,3 +8,27 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom CSS for background animation */
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient 15s ease infinite;
+}
+.bg-dark-blue {
+  background-color: #1e3a8a; /* Dark blue color */
+}

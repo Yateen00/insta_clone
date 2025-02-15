@@ -29,20 +29,37 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       @user = User.find_or_initialize_by(provider: auth.provider, uid: auth.uid)
 
       if @user.persisted?
-        sign_in_and_redirect @user, event: :authentication
+        sign_in @user, event: :authentication
         set_flash_message(:notice, :success, kind: provider) if is_navigational_format?
-      else
-        session["devise.#{provider.downcase}_data"] = {
-          provider: auth.provider,
-          uid: auth.uid,
-          email: auth.info.email
-        }
-        session["devise.#{provider.downcase}_profile"] = { username: auth.info.name }
-
-        redirect_to confirm_profile_path(provider: provider.downcase)
+        redirect_to root_path
+      elsif @user.new_record?
+        @user.username = auth.info.nickname || auth.info.name || generate_unique_username(auth.uid)
+        @user.email = auth.info.email if @user.email.blank?
+        if @user.save
+          @user.create_profile unless @user.profile
+          sign_in @user, event: :authentication
+          set_flash_message(:notice, :success, kind: provider) if is_navigational_format?
+          redirect_to edit_profile_path(@user.profile)
+        else
+          session["devise.#{provider.downcase}_data"] = auth.except("extra")
+          redirect_to new_user_registration_url
+        end
       end
     end
 
+
+    def generate_unique_username(uid)
+      base_username = "user_#{uid}"
+      username = base_username
+      counter = 1
+
+      while User.exists?(username: username)
+        username = "#{base_username}_#{counter}"
+        counter += 1
+      end
+
+      username
+    end
   # GET|POST /users/auth/twitter/callback
   # def failure
   #   super

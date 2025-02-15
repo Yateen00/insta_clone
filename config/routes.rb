@@ -3,18 +3,15 @@ Rails.application.routes.draw do
     registrations: "users/registrations",
     omniauth_callbacks: "users/omniauth_callbacks",
     sessions: "users/sessions"
-  }, skip: [:edit,:update]
+  }
   # devise_scope :user do
   #   delete "sign_out", to: "devise/sessions#destroy", as: :destroy_user_session
   # end
-  resource :profile, only: [:edit, :update] do
-    collection do
-      get "confirm"
-      post "create_oauth"
-    end
-  end
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
+  resources :users
+  resources :profiles, only: [:edit, :update]
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
