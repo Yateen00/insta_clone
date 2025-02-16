@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   attr_writer :login
-
-  has_one :profile, dependent: :destroy
+  has_many :posts, foreign_key: "creator_id", dependent: :destroy
+  has_one :profile, dependent: :destroy, inverse_of: :user
   accepts_nested_attributes_for :profile
 
   after_create :create_profile
