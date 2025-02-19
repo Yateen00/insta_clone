@@ -85,7 +85,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       profile_attributes = {
         name: auth.info.name,
         link: find_url(auth.info.urls, provider),
-        bio: auth.info.Blog.truncate(200, omission: ""),
+        bio: auth.info.Blog&.truncate(200, omission: ""),
         remote_profile_picture_url: auth.info.image
         # can be assigned if it its invalid path, it defualts to defualt url. and in db it stores nil for profile_picture. so no isusues.
       }.compact
@@ -100,7 +100,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     def find_url(urls, provider)
       # as already foramtted in rest of way
       provider = provider.downcase
-      urls.detect { |key, _| key.downcase.include?(provider) }[1] || urls.values.first
+      urls&.detect { |key, _| key.downcase.include?(provider) }&.[](1) || urls&.values&.first
     end
 
     def generate_unique_username(_uid)

@@ -1,5 +1,5 @@
 class ProfilesController < ApplicationController
-  before_action :set_profile, only: %i[edit update]
+  before_action %i[authenticate_user! set_profile], only: %i[edit update]
 
   def edit
     render layout: "form"
@@ -21,6 +21,7 @@ class ProfilesController < ApplicationController
     end
 
     def profile_params
-      params.require(:profile).permit(:name, :gender, :dob, :link, :bio, :profile_picture, user_attributes: [:username, :id])
+      params.require(:profile).permit(:name, :gender, :dob, :link, :bio, :profile_picture,
+                                      user_attributes: %i[username id])
     end
 end

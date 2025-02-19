@@ -36,10 +36,6 @@ class User < ApplicationRecord
   end
 
   private
-    def create_profile
-      build_profile.save unless profile
-    end
-
     def send_welcome_email
       UserMailer.welcome_email(self).deliver_now
     end
