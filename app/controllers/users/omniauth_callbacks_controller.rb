@@ -117,7 +117,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
 
     def format_username(username)
-      username.tr(" ", "_").gsub(/[^a-zA-Z0-9_.-]/, "") # .truncate(20, omission: "")
+      username.tr(" ", "_").gsub(/[^a-zA-Z0-9_.-]/, "").truncate(20, omission: "")
     end
   # GET|POST /users/auth/twitter/callback
   # def failure
