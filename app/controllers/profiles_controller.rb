@@ -1,5 +1,7 @@
 class ProfilesController < ApplicationController
-  before_action %i[authenticate_user! set_profile], only: %i[edit update]
+  before_action :authenticate_user!
+  before_action :set_profile, only: %i[edit update]
+  before_action :authorize_user!, only: %i[edit update]
 
   def edit
     render layout: "form"
@@ -18,6 +20,10 @@ class ProfilesController < ApplicationController
   private
     def set_profile
       @profile = Profile.find(params[:id])
+    end
+
+    def authorize_user!
+      redirect_to root_path, alert: "You can only edit your own profile." unless current_user.profile == @profile
     end
 
     def profile_params

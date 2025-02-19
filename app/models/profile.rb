@@ -8,4 +8,12 @@ class Profile < ApplicationRecord
   validates :bio, length: { maximum: 200 }
 
   mount_uploader :profile_picture, ProfilePictureUploader
+  after_find :set_default_profile_picture
+
+  private
+    def set_default_profile_picture
+      return if profile_picture.present?
+
+      self.profile_picture = ProfilePictureUploader.new
+    end
 end
