@@ -1,0 +1,10 @@
+<% if user_signed_in? %>
+  <div class="w-full flex justify-end space-x-4">
+    <%= link_to edit_profile_path(current_user.profile), class: "hover:text-indigo-800 px-3 py-1 rounded" do %>
+      <%= image_tag current_user.profile.profile_picture_url, alt: "Profile Picture", class: "h-8 w-8 rounded-full" %>
+    <% end %>
+    <%= link_to destroy_user_session_path, method: :delete, data: { turbo_method: :delete, confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, class: "hover:text-indigo-800 px-3 py-1 rounded flex items-center" do %>
+      <%= raw File.read(Rails.root.join('app', 'assets', 'images', 'logout.svg')).gsub('<svg ', '<svg class="h-7 w-7" ') %>
+    <% end %>
+  </div>
+<% end %>

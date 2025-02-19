@@ -2,12 +2,7 @@
   <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-2xl min-w-md w-full space-y-8 bg-gray-800 p-8 rounded-lg shadow-lg">
       <main class="w-full">
-        <% if user_signed_in? %>
-          <div class="w-full flex justify-end space-x-4">
-            <%= link_to "Edit Profile", edit_profile_path(current_user.profile), class: "text-indigo-600 hover:text-indigo-800 bg-gray-200 px-3 py-1 rounded" %>
-            <%= link_to "Log out", destroy_user_session_path, method: :delete, data: { turbo_method: :delete, confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, class: "text-indigo-600 hover:text-indigo-800 bg-gray-200 px-3 py-1 rounded" %>
-          </div>
-        <% end %>
+        <%= render "layouts/user_links" %>
         <%= render "layouts/flash" %>
         <%= yield %>
       </main>

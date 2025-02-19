@@ -1,14 +1,16 @@
 <h2 class="text-2xl font-bold mb-4">Edit <%= resource_name.to_s.humanize %></h2>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "space-y-6" }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+  <%= render "users/shared/error_messages", resource: resource %>
+
   <div class="field">
     <%= f.label :username, class: "block text-sm font-medium text-white" %>
     <%= f.text_field :username, autofocus: true, class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
   </div>
+
   <div class="field">
     <%= f.label :email, class: "block text-sm font-medium text-white" %>
-    <%= f.email_field :email, autofocus: true, value: resource.email, autocomplete: "email", class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
+    <%= f.email_field :email, value: resource.email, autocomplete: "email", class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
   </div>
 
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
@@ -35,13 +37,11 @@
     <%= f.password_field :current_password, autocomplete: "current-password", class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
   </div>
 
-  <div class="actions">
-    <%= f.submit "Update", class: "w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
-  </div>
+  <%= f.submit "Update", class: "w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
 <% end %>
 
 <h3 class="text-xl font-bold mb-4">Cancel my account</h3>
 
-<div class="text-sm text-gray-500">Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete, class: "text-red-600 hover:text-red-800" %></div>
+<div class="text-sm text-gray-500">Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete, class: "w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500" %></div>
 
 <%= link_to "Back", :back, class: "text-indigo-600 hover:text-indigo-800" %>

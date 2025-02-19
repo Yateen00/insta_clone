@@ -1,6 +1,6 @@
 module ApplicationHelper
   def format_provider(provider)
-    provider.gsub(/\d/, "").gsub(/oauth/i, "").gsub(/auth/i, "")
+    provider.gsub(/[^a-zA-Z]/, "").gsub(/oauth/i, "")
   end
 
   def flash_class(level)

@@ -12,7 +12,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Custom CSS for background animation */
 @keyframes gradient {
   0% {
     background-position: 0% 50%;
@@ -25,10 +24,28 @@
   }
 }
 
-.animate-gradient {
-  background-size: 200% 200%;
+.animated-gradient {
+  background: linear-gradient(
+    200deg,
+    #0c1a2b,
+    #0e2238,
+    #102a43,
+    #142e4f,
+    #1a3760,
+    #1e3c72,
+    #224479,
+    #275083,
+    #2a5298,
+    #275083,
+    #224479,
+    #1e3c72,
+    #1a3760,
+    #142e4f,
+    #102a43,
+    #0e2238,
+    #0c1a2b
+  );
+
+  background-size: 400% 400%;
   animation: gradient 15s ease infinite;
-}
-.bg-dark-blue {
-  background-color: #1e3a8a; /* Dark blue color */
 }

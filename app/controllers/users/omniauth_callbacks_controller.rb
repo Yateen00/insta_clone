@@ -45,7 +45,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       @user.username = !User.exists?(username: @user.username) && @user.username ? @user.username : generate_unique_username(auth.uid)
       @user.password = Devise.friendly_token[0, 20]
       if @user.save
-        @user.create_profile
+        @user.create_profile if @user.profile.nil?
         update_profile(@user.profile, auth, provider)
         sign_in @user, event: :authentication
 

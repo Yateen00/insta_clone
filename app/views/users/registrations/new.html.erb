@@ -4,8 +4,8 @@
   <span class="text-sm font-medium text-white">
     Already have an account? <%= link_to "Log in", new_session_path(resource_name), class: "text-indigo-600 hover:text-indigo-500" %>
   </span>
-
 </div>
+
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "space-y-6" }) do |f| %>
   <%= render "users/shared/error_messages", resource: resource %>
   <div class="field">
@@ -37,9 +37,7 @@
     </div>
   </div>
 
-  <div class="actions">
-    <%= f.submit "Sign up", class: "w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500", data: {turbo_confirm: "Ready to sign your soul away?" } %>
-  </div>
-<% end %>
+  <%= f.submit "Sign up", class: "w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500", data: {turbo_confirm: "Ready to sign your soul away?" } %>
 
-<%= render "users/shared/links" %>
+<% end %>
+<%= render "users/shared/oauth_links" %>
