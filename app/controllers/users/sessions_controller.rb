@@ -13,7 +13,7 @@ class Users::SessionsController < Devise::SessionsController
     def check_omniauth_user
       user = User.find_by(email: params[:user][:email])
       if user && user.provider.present?
-        flash[:alert] = "Please use #{user.provider.capitalize} to log in."
+        flash[:alert] = "Please use #{format_provider(user.provider.capitalize)} to log in."
         redirect_to new_user_session_path
       end
     end

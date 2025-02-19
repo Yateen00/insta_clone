@@ -1,0 +1,19 @@
+<%= form_with model: resource do |form| %>
+  <%= render "devise/shared/error_messages" , resource: resource %>
+
+  <div class="field">
+    <%= form.fields_for :postable,resource.postable do |postable_form| %>
+      <%= postable_form.hidden_field :type, value: 'Text' %>
+      <%= postable_form.label :content %>
+      <%= postable_form.text_area :content %>
+    <% end %>
+  </div>
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_area :description %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

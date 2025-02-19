@@ -8,8 +8,7 @@ require:
 AllCops:
   # RuboCop has a bunch of cops enabled by default. This setting tells RuboCop
   # to ignore them, so only the ones explicitly set in this file are enabled.
-  DisabledByDefault: true
-  SuggestExtensions: false
+
   Exclude:
     - "**/tmp/**/*"
     - "**/templates/**/*"
@@ -27,7 +26,8 @@ AllCops:
     - "**/4_*_release_notes.md"
     - "**/5_*_release_notes.md"
     - "**/6_*_release_notes.md"
-
+  NewCops: enable
+  TargetRubyVersion: 3.3.x
 Performance:
   Exclude:
     - "**/test/**/*"
@@ -267,6 +267,9 @@ Lint/RedundantSafeNavigation:
 
 Lint/UriEscapeUnescape:
   Enabled: true
+
+Lint/UnusedMethodArgument:
+  Enabled: false
 
 Lint/UselessAssignment:
   Enabled: true

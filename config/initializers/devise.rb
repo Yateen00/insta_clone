@@ -274,8 +274,9 @@ Devise.setup do |config|
   # Google OAuth2 configuration
   config.omniauth :google_oauth2, ENV["GOOGLE_CLIENT_ID"], ENV["GOOGLE_CLIENT_SECRET"], {
     scope: "userinfo.email, userinfo.profile",
-    prompt: "select_account"
-  }
+    image_size: 150,
+    image_aspect_ratio: "square"}
+
 
   # GitHub OAuth configuration
   config.omniauth :github, ENV["GITHUB_CLIENT_ID"], ENV["GITHUB_CLIENT_SECRET"], {

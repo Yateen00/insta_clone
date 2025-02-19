@@ -2,13 +2,12 @@
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "space-y-6" }) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
-  
   <div class="field">
-    <%= f.label :username, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.label :username, class: "block text-sm font-medium text-white" %>
     <%= f.text_field :username, autofocus: true, class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
   </div>
   <div class="field">
-    <%= f.label :email, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.label :email, class: "block text-sm font-medium text-white" %>
     <%= f.email_field :email, autofocus: true, value: resource.email, autocomplete: "email", class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
   </div>
 
@@ -17,7 +16,7 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :password, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.label :password, class: "block text-sm font-medium text-white" %>
     <i class="text-xs text-gray-500">(leave blank if you don't want to change it)</i>
     <%= f.password_field :password, autocomplete: "new-password", class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
     <% if @minimum_password_length %>
@@ -26,12 +25,12 @@
   </div>
 
   <div class="field">
-    <%= f.label :password_confirmation, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.label :password_confirmation, class: "block text-sm font-medium text-white" %>
     <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
   </div>
 
   <div class="field">
-    <%= f.label :current_password, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.label :current_password, class: "block text-sm font-medium text-white" %>
     <i class="text-xs text-gray-500">(we need your current password to confirm your changes)</i>
     <%= f.password_field :current_password, autocomplete: "current-password", class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
   </div>

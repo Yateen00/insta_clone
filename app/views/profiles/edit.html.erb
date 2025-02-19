@@ -1,17 +1,17 @@
-<h2 class="text-2xl font-bold mb-4 text-gray-800">Edit Profile</h2>
+<h2 class="text-2xl font-bold mb-4 text-white">Edit Profile</h2>
 
 <%= form_for(@profile, html: { class: "space-y-6", multipart: true, data: { controller: "reset-form" } }) do |f| %>
   <%= render "users/shared/error_messages", resource: @profile %>
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
     <%= f.fields_for :user do |user_fields| %>
       <div class="field">
-        <%= user_fields.label :username, class: "block text-sm font-medium text-gray-700" %>
+        <%= user_fields.label :username, class: "block text-sm font-medium text-white" %>
         <%= user_fields.text_field :username, class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
       </div>
     <% end %>
 
     <div class="field" data-controller="profile-picture">
-      <%= f.label :profile_picture, class: "block text-sm font-medium text-gray-700" %>
+      <%= f.label :profile_picture, class: "block text-sm font-medium text-white" %>
       <div class="mt-1 flex items-center">
         <div class="relative cursor-pointer" data-action="click->profile-picture#click">
           <% if @profile.profile_picture.present? %>
@@ -26,29 +26,29 @@
   </div>
 
   <div class="field">
-    <%= f.label :name, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.label :name, class: "block text-sm font-medium text-white" %>
     <%= f.text_field :name, class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
     <div class="field">
-      <%= f.label :gender, class: "block text-sm font-medium text-gray-700" %>
+      <%= f.label :gender, class: "block text-sm font-medium text-white" %>
       <%= f.select :gender, Profile.genders.keys.map { |gender| [gender.humanize, gender] }, {}, class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
     </div>
 
     <div class="field">
-      <%= f.label :dob, "Date of Birth", class: "block text-sm font-medium text-gray-700" %>
+      <%= f.label :dob, "Date of Birth", class: "block text-sm font-medium text-white" %>
       <%= f.date_select :dob, start_year: 1900, end_year: Time.now.year, class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
     </div>
   </div>
 
   <div class="field">
-    <%= f.label :link, "Website Link", class: "block text-sm font-medium text-gray-700" %>
+    <%= f.label :link, "Website Link", class: "block text-sm font-medium text-white" %>
     <%= f.url_field :link, class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
   </div>
 
   <div class="field">
-    <%= f.label :bio, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.label :bio, class: "block text-sm font-medium text-white" %>
     <%= f.text_area :bio, rows: 5, class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
   </div>
 

@@ -1,21 +1,25 @@
-<h2 class="text-2xl font-bold mb-4">Sign up</h2>
-<p class="notice text-green-600"><%= notice %></p>
-<p class="alert text-red-600"><%= alert %></p>
+<div class="flex justify-between items-center mb-4">
+  <h2 class="text-2xl font-bold">Sign up</h2>
+
+  <span class="text-sm font-medium text-white">
+    Already have an account? <%= link_to "Log in", new_session_path(resource_name), class: "text-indigo-600 hover:text-indigo-500" %>
+  </span>
+
+</div>
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "space-y-6" }) do |f| %>
   <%= render "users/shared/error_messages", resource: resource %>
-
   <div class="field">
-    <%= f.label :username, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.label :username, class: "block text-sm font-medium text-white" %>
     <%= f.text_field :username, autofocus: true, class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
   </div>
 
   <div class="field">
-    <%= f.label :email, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.label :email, class: "block text-sm font-medium text-white" %>
     <%= f.email_field :email, autocomplete: "email", class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
   </div>
 
   <div class="field" data-controller="password-visibility">
-    <%= f.label :password, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.label :password, class: "block text-sm font-medium text-white" %>
     <% if @minimum_password_length %>
       <em class="text-xs text-gray-500">(<%= @minimum_password_length %> characters minimum)</em>
     <% end %>
@@ -26,7 +30,7 @@
   </div>
 
   <div class="field" data-controller="password-visibility">
-    <%= f.label :password_confirmation, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.label :password_confirmation, class: "block text-sm font-medium text-white" %>
     <div class="relative">
       <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm", data: { password_visibility_target: "password" } %>
       <img src="https://www.svgrepo.com/show/380010/eye-password-show.svg" alt="Toggle visibility" class="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer" data-action="click->password-visibility#toggle" data-password-visibility-target="toggle" width="24" height="24" />
@@ -34,7 +38,7 @@
   </div>
 
   <div class="actions">
-    <%= f.submit "Sign up", class: "w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+    <%= f.submit "Sign up", class: "w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500", data: {turbo_confirm: "Ready to sign your soul away?" } %>
   </div>
 <% end %>
 

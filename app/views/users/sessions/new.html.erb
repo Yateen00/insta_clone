@@ -1,24 +1,22 @@
+<div class="flex justify-between items-center mb-4">
+  <h2 class="text-2xl font-bold">Log in</h2>
+
+  <span class="text-sm font-medium text-white">
+    Don't have an account? <%= link_to "Sign up", new_registration_path(resource_name), class: "text-indigo-600 hover:text-indigo-500" %>
+  </span>
+
+</div>
 <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "space-y-6" }) do |f| %>
 
-  <div class="flex justify-between items-center mb-4">
-    <h2 class="text-2xl font-bold">Log in</h2>
-    <% if devise_mapping.registerable? && controller_name != 'registrations' %>
-      <span class="text-sm font-medium text-gray-700">
-        Don't have an account? <%= link_to "Sign up", new_registration_path(resource_name), class: "text-indigo-600 hover:text-indigo-500" %>
-      </span>
-    <% end %>
-  </div>
-  <p class="notice text-green-600"><%= notice %></p>
-  <p class="alert text-red-600"><%= alert %></p>
   <%= render "users/shared/error_messages", resource: resource %>
 
   <div class="field">
-    <%= f.label :login, "Username or Email", class: "block text-sm font-medium text-gray-700" %>
+    <%= f.label :login, "Username or Email", class: "block text-sm font-medium text-white" %>
     <%= f.text_field :login, autofocus: true, autocomplete: "username", class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
   </div>
 
   <div class="field" data-controller="password-visibility">
-    <%= f.label :password, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.label :password, class: "block text-sm font-medium text-white" %>
     <div class="relative">
       <%= f.password_field :password, autocomplete: "current-password", class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm", data: { password_visibility_target: "password" } %>
       <img src="https://www.svgrepo.com/show/380010/eye-password-show.svg" alt="Toggle visibility" class="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer" data-action="click->password-visibility#toggle" data-password-visibility-target="toggle" width="24" height="24" />
@@ -28,7 +26,7 @@
   <% if devise_mapping.rememberable? %>
     <div class="field">
       <%= f.check_box :remember_me, class: "mr-2 leading-tight" %>
-      <%= f.label :remember_me, class: "text-sm font-medium text-gray-700" %>
+      <%= f.label :remember_me, class: "text-sm font-medium text-white" %>
     </div>
   <% end %>
 

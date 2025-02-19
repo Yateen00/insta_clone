@@ -22,7 +22,7 @@ class ProfilePictureUploader < CarrierWave::Uploader::Base
   #   "/images/fallback/" + [version_name, "default.png"].compact.join('_')
   # end
 
-  def extension_whitelist
+  def extension_allowlist
     %w[jpg jpeg gif png svg]
   end
 
@@ -31,14 +31,15 @@ class ProfilePictureUploader < CarrierWave::Uploader::Base
   def enforce_aspect_ratio
     manipulate! do |img|
       img.combine_options do |c|
-        c.resize "500x500^"
+        c.resize "110x110^"
         c.gravity "center"
         c.background "black"
-        c.extent "500x500"
+        c.extent "110x110"
       end
       img
     end
   end
+
   def default_url(*args)
     ActionController::Base.helpers.asset_path("profile-default.svg")
   end

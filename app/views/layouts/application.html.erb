@@ -24,19 +24,15 @@
 
   <body class="bg-gray-900 text-white min-h-screen flex items-center justify-center">
     <div class="absolute top-0 right-0 p-4 flex space-x-4">
-      <%= link_to edit_profile_path(current_user.profile), class: "hover:text-indigo-800 px-3 py-1 rounded" do %>
-        <%= image_tag current_user.profile.profile_picture_url, alt: "Profile Picture", class: "h-8 w-8 rounded-full" %>
-      <% end %>
-      <%= link_to destroy_user_session_path, method: :delete, data: { turbo_method: :delete, confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, class: "hover:text-indigo-800 px-3 py-1 rounded flex items-center" do %>
-        <%= raw File.read(Rails.root.join('app', 'assets', 'images', 'logout.svg')).gsub('<svg ', '<svg class="h-8 w-8" ') %>
+      <% if user_signed_in? %>
+        <%= link_to edit_profile_path(current_user.profile), class: "hover:text-indigo-800 px-3 py-1 rounded" do %>
+          <%= image_tag current_user.profile.profile_picture_url, alt: "Profile Picture", class: "h-8 w-8 rounded-full" %>
+        <% end %>
+        <%= link_to destroy_user_session_path, method: :delete, data: { turbo_method: :delete, confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, class: "hover:text-indigo-800 px-3 py-1 rounded flex items-center" do %>
+          <%= raw File.read(Rails.root.join('app', 'assets', 'images', 'logout.svg')).gsub('<svg ', '<svg class="h-8 w-8" ') %>
+        <% end %>
       <% end %>
     </div>
-    <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div class="max-w-2xl w-full space-y-8 bg-gray-800 p-8 rounded-lg shadow-lg">
-        <main class="w-full">
-          <%= yield %>
-        </main>
-      </div>
-    </div>
+    <%= content_for?(:body) ? yield(:body) : render(template: "layouts/default") %>
   </body>
 </html>
