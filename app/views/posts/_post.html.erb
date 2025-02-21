@@ -1,0 +1,26 @@
+<div class="bg-gray-800 text-white p-4 rounded-lg">
+  <div class="flex items-center mb-4">
+    <%= link_to user_path(post.creator) do %>
+      <%= image_tag post.creator.profile.profile_picture.url, class: "h-10 w-10 rounded-full mr-2" %>
+      <span class="font-bold"><%= post.creator.username %></span>
+    <% end %>
+  </div>
+
+  <div class="mb-4 w-full h-80 flex items-center justify-center bg-gray-700 rounded-lg overflow-hidden">
+    <%= render "posts/content", post: post %>
+  </div>
+
+  <div class="mb-4">
+    <%= truncate(post.description, length: 100) %>
+    <% if post.description.length > 100 %>
+      <%= link_to "Read more", "#", data: { action: "click->read-more#toggle", target: "read-more.content" }, class: "text-blue-500" %>
+      <span data-read-more-target="content" class="hidden"><%= post.description %></span>
+    <% end %>
+  </div>
+
+  <div class="flex justify-between">
+    <%= link_to 'Show', post, class: "text-blue-500" %>
+    <%= link_to 'Edit', edit_post_path(post), class: "text-blue-500" %>
+    <%= link_to 'Destroy', post, data: { turbo_confirm: "Are you sure?", turbo_method: :delete }, class: "text-red-500" %>
+  </div>
+</div>

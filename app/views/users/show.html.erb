@@ -1,0 +1,19 @@
+<h1 class="text-2xl font-bold mb-4 text-white"><%= @user.username %>'s Profile</h1>
+
+<div class="profile mb-8">
+  <%= image_tag @user.profile.profile_picture.url, class: "h-20 w-20 rounded-full mb-4" %>
+  <p><strong>Name:</strong> <%= @user.profile.name %></p>
+  <p><strong>Username:</strong> <%= @user.username %></p>
+  <p><strong>Gender:</strong> <%= @user.profile.gender %></p>
+  <p><strong>Date of Birth:</strong> <%= @user.profile.dob %></p>
+  <p><strong>Website Link:</strong>
+    <% if @user.profile.link.present? %>
+      <%= link_to @user.profile.link, @user.profile.link, class: "text-blue-500" %>
+    <% end %>
+  </p>
+  <p><strong>Bio:</strong> <%= @user.profile.bio %></p>
+
+  <% if current_user == @user %>
+    <%= link_to 'Edit Profile', edit_profile_path(@user.profile), class: "mt-4 inline-block bg-blue-500 text-white py-2 px-4 rounded" %>
+  <% end %>
+</div>

@@ -22,11 +22,17 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="animated-gradient text-white min-h-screen flex items-center justify-center">
-    <div class="absolute top-0 right-0 p-4 flex space-x-4">
+  <body class="bg-gray-900 text-white min-h-screen flex flex-col items-center pb-8 animated-gradient">
+    <nav class="w-full p-4 flex justify-end">
       <%= render "layouts/user_links" %>
-    </div>
+    </nav>
+
     <%= render "layouts/flash" %>
-    <%= content_for?(:body) ? yield(:body) : render(template: "layouts/default") %>
+
+    <div class="w-full flex justify-center">
+      <div class="w-full max-w-3xl mt-4">
+        <%= content_for?(:body) ? yield(:body) : render(template: "layouts/default") %>
+      </div>
+    </div>
   </body>
 </html>

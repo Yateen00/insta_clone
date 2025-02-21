@@ -1,0 +1,25 @@
+<% if post.image? %>
+  <% if post.postable.content.url.include?('/assets/') %>
+    <div id="image-unavailable" class="fixed top-0 left-1/2 transform -translate-x-1/2 mt-4 z-50 bg-red-500 text-white p-4 rounded" data-controller="flash">
+      Image unavailable
+    </div>
+  <% else %>
+    <div class="w-full h-full flex items-center justify-center">
+      <%= image_tag post.postable.content.url.presence || asset_path('default_image.svg'), class: "max-w-full max-h-full object-contain" %>
+    </div>
+  <% end %>
+<% elsif post.video? %>
+  <% if post.postable.content.url.include?('/assets/') %>
+    <div id="video-unavailable" class="fixed top-0 left-1/2 transform -translate-x-1/2 mt-4 z-50 bg-red-500 text-white p-4 rounded" data-controller="flash">
+      Video unavailable
+    </div>
+  <% else %>
+    <div class="w-full h-full flex items-center justify-center">
+      <%= video_tag post.postable.content.url.presence || asset_path('default_video.mp4'), controls: true, preload: "auto", class: "max-w-full max-h-full object-contain" %>
+    </div>
+  <% end %>
+<% else %>
+  <div class="w-full h-full p-2 overflow-auto"><%= post.postable.content.presence || "Content unavailable" %></div>
+<% end %>
+
+<!-- to do: default video/image check and add allowed files and size etc in models. and figure out how to use controller -->

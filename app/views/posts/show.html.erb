@@ -1,11 +1,5 @@
-<p>
-  <strong>Body:</strong>
-  <%= @post.postable.content %>
-</p>
-<p>
-  <strong>description:</strong>
-  <%= @post.description %>
-</p>
-
-<%= link_to 'Edit', edit_post_path(@post) %> |
-<%= link_to 'Back', posts_path %>
+  
+<h1 class="text-2xl font-bold mb-4 text-white">Post</h1>
+<div class="space-y-4">
+  <%= render "post",post: @post%>
+</div>

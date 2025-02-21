@@ -1,10 +1,8 @@
 <% content_for :body do %>
-  <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-2xl min-w-md w-full space-y-8 bg-gray-800 p-8 rounded-lg shadow-lg">
-      <main class="w-full">
-        <%= render "layouts/flash" %>
-        <%= yield %>
-      </main>
+  <div class="flex items-center justify-center min-h-screen py-12 px-4">
+    <div class=" min-w-md  bg-gray-900 p-8 rounded-lg shadow-lg">
+      <%= render "layouts/flash" %>
+      <%= yield %>
     </div>
   </div>
 <% end %>

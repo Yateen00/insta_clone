@@ -10,8 +10,8 @@ Rails.application.routes.draw do
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  resources :users
-  resources :profiles, only: [:edit, :update]
+  resources :users, only: [:show]
+  resources :profiles, only: %i[edit update]
   resources :posts
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.

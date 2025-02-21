@@ -9,6 +9,7 @@ class Profile < ApplicationRecord
 
   mount_uploader :profile_picture, ProfilePictureUploader
   after_find :set_default_profile_picture
+  validate -> { errors.add(:dob, "can't be in the future") if dob.present? && dob > Date.today }
 
   private
     def set_default_profile_picture
