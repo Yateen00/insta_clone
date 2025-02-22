@@ -4,6 +4,9 @@ class Post < ApplicationRecord
   accepts_nested_attributes_for :postable
   validates :postable, presence: true
   validates :description, length: { maximum: 500 }
+
+  # has_many :likes, as: :likeable, dependent: :destroy
+  has_many :comments, dependent: :destroy
   POSTABLE_TYPES = %w[Text Image Video].freeze
   # def build_postable(type)
   #   if type.is_a?(String)
@@ -43,4 +46,5 @@ class Post < ApplicationRecord
       postable_type == type
     end
   end
+
 end

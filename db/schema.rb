@@ -10,9 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_21_202945) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_22_163729) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "comments", force: :cascade do |t|
+    t.text "content", null: false
+    t.bigint "post_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "reply_to_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "replies_count", default: 0
+    t.index ["post_id"], name: "index_comments_on_post_id"
+    t.index ["reply_to_id"], name: "index_comments_on_reply_to_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
 
   create_table "images", force: :cascade do |t|
     t.string "content", null: false
@@ -27,6 +40,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_21_202945) do
     t.bigint "creator_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "comments_count", default: 0
     t.index ["creator_id"], name: "index_posts_on_creator_id"
     t.index ["postable_type", "postable_id"], name: "index_posts_on_postable"
   end
@@ -77,6 +91,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_21_202945) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "comments", "comments", column: "reply_to_id"
+  add_foreign_key "comments", "posts"
+  add_foreign_key "comments", "users"
   add_foreign_key "posts", "users", column: "creator_id"
   add_foreign_key "profiles", "users"
 end

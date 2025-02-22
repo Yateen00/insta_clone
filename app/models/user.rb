@@ -2,6 +2,10 @@ class User < ApplicationRecord
   attr_writer :login
 
   has_many :posts, foreign_key: "creator_id", dependent: :destroy
+  has_many :comments, dependent: :destroy
+
+  # has_many :liked_posts, through: :likes, source: :likeable, source_type: "Post"
+  # has_many :liked_comments, through: :likes, source: :likeable, source_type: "Comment"
   has_one :profile, dependent: :destroy, inverse_of: :user
   accepts_nested_attributes_for :profile
 
