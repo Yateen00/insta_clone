@@ -13,6 +13,9 @@ class VideoUploader < CarrierWave::Uploader::Base
   def store_dir
     "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
   end
+  include CarrierWave::Video
+
+  process encode_video: [:mp4, { resolution: "1280x720" }]
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
   # def default_url(*args)
@@ -43,7 +46,7 @@ class VideoUploader < CarrierWave::Uploader::Base
   #   %w(jpg jpeg gif png)
   # end
   def extension_allowlist
-    %w[mp4 webm ogg]
+    %w[mp4 webm ogg mkv]
   end
   # Override the filename of the uploaded files:
   # Avoid using model.id or version_name here, see uploader/store.rb for details.

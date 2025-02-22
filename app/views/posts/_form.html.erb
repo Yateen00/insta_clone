@@ -1,7 +1,8 @@
 <%= form_with model: post, local: true, html: { multipart: true, data: { controller: "asset" } } do |form| %>
   <%= render "devise/shared/error_messages", resource: post %>
 
-  <div class="field mb-4">
+  <!-- to change min width -->
+  <div class="field mb-4 min-w-xl">
     <%= form.fields_for :postable do |postable_form| %>
       <%= postable_form.label :content, "Body", class: "block text-lg font-medium text-white flex justify-between items-center" %>
 
@@ -15,22 +16,27 @@
       </div>
 
       <!-- Text Input (Hidden if editing an Image/Video) -->
-      <div class="mt-1 <%= 'hidden' if post.postable.is_a?(Image) || post.postable.is_a?(Video) %>" data-asset-target="textInput">
+      <div class="mt-1  h-[400px] <%= 'hidden' if post.postable.is_a?(Image) || post.postable.is_a?(Video) %>" data-asset-target="textInput">
         <%= postable_form.text_area :content, value: (post.postable.is_a?(Text) ? post.postable.content : ""), 
-          class: "mt-1 block w-full h-80 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
+          class: "mt-1 block w-full h-full px-3 py-2 resize-none border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
       </div>
 
       <!-- Media Upload -->
-      <div class="relative mt-1 w-full h-80 bg-gray-700 rounded-lg flex flex-col items-center justify-center" data-asset-target="fileInput">
-        <%= postable_form.file_field :content, accept: "image/png, image/jpeg, image/gif, video/mp4, video/webm, video/ogg", 
-          class: "hidden", data: { "asset-target": "input", action: "change->asset#preview" } %>
+      <div class="relative mt-1 w-full h-[400px] bg-gray-700 rounded-lg flex flex-col items-center  overflow-hidden" data-asset-target="fileInput">
+        <%= postable_form.file_field :content, accept: "image/png, image/jpeg, image/gif, video/mp4, video/webm, video/ogg, video/mkv",
+            class: "hidden", data: { "asset-target": "input", action: "change->asset#preview" } %>
+        <!-- Media Preview -->
 
-        <div id="preview" data-asset-target="preview" class="w-full h-full flex items-center justify-center relative">
+        <div id="preview" data-asset-target="preview" 
+     class="absolute inset-0 flex items-center justify-center overflow-hidden">
           <% if post.postable.is_a?(Image) %>
-            <img src="<%= post.postable.content.url %>" class="max-w-full max-h-full object-contain mx-auto" />
+            <img src="<%= post.postable.content.url %>" 
+         class="w-auto h-auto max-w-full max-h-full object-contain" />
           <% elsif post.postable.is_a?(Video) %>
-            <video controls class="max-w-full max-h-full object-contain mx-auto">
-              <source src="<%= post.postable.content.url %>" type="<%= post.postable.content.file.content_type %>">
+            <video controls 
+           class="w-auto h-auto max-w-full max-h-full object-contain">
+              <source src="<%= post.postable.content.url %>" 
+              type="<%= post.postable.content.file.content_type %>">
               Your browser does not support the video tag.
             </video>
           <% end %>
@@ -38,25 +44,25 @@
 
         <!-- Upload Button (Hidden if file is present) -->
         <button type="button" data-action="click->asset#clickFileInput"
-          class="p-2 bg-gray-700 rounded hover:bg-gray-600 <%= 'hidden' if post.postable.is_a?(Image) || post.postable.is_a?(Video) %>"
-          data-asset-target="fileButton">
+          class="absolute inset-0 flex items-center justify-center bg-gray-700 hover:bg-gray-600 min-h-[300px]"
+          data-asset-target="fileButton <%= 'hidden' if post.postable.is_a?(Image) || post.postable.is_a?(Video) %>">
           <%= raw File.read(Rails.root.join('app', 'assets', 'images', 'upload.svg')).gsub('<svg ', '<svg class="h-12 w-12" ') %>
         </button>
 
-        <!-- Delete Button (Only show if editing an existing file) -->
-        <% if post.postable.is_a?(Image) || post.postable.is_a?(Video) %>
-          <button type="button" data-action="click->asset#deleteMedia" 
-            class="absolute top-2 right-2 w-8 h-8 bg-gray-800 rounded-full p-1 hover:bg-red-600">
-            <%= raw File.read(Rails.root.join('app', 'assets', 'images', 'delete.svg')).gsub('<svg ', '<svg class="h-6 w-6 text-white" ') %>
-          </button>
-        <% end %>
-      </div>
-    <% end %>
+        <!-- Delete Button -->
+        <button type="button" data-action="click->asset#deleteMedia"
+          class="absolute top-2 right-2 w-8 h-8 bg-gray-800 rounded-full p-1 hover:bg-red-600 hidden flex items-center justify-center"
+          data-asset-target="deleteButton">
+          <%= raw File.read(Rails.root.join('app', 'assets', 'images', 'delete.svg')).gsub('<svg ', '<svg class="h-5 w-5" ') %>
+        </button>
+
+      <%end%>
+    </div>
   </div>
 
   <div class="field mb-4">
     <%= form.label :description, class: "block text-sm font-medium text-white" %>
-    <%= form.text_area :description, class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
+    <%= form.text_area :description, class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm resize-none" %>
   </div>
 
   <div class="actions">

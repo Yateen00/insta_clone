@@ -1,15 +1,24 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["textInput", "fileInput", "input", "preview", "fileButton"];
+  static targets = [
+    "textInput",
+    "fileInput",
+    "input",
+    "preview",
+    "fileButton",
+    "deleteButton",
+  ];
 
   connect() {
     console.log("AssetController connected");
 
-    if (this.previewTarget.innerHTML.trim() !== "") {
-      this.showFileInput(); // If a file is already uploaded (edit mode)
+    if (this.previewTarget.querySelector("img, video")) {
+      this.showFileInput();
+      this.fileButtonTarget.classList.add("hidden");
+      this.deleteButtonTarget.classList.remove("hidden");
     } else {
-      this.showTextInput(); // Default to text input
+      this.showTextInput();
     }
   }
 
@@ -43,44 +52,27 @@ export default class extends Controller {
     const reader = new FileReader();
     reader.onload = (e) => {
       let previewContent = "";
+      const fileType = file.type;
+      const fileExtension = file.name.split(".").pop().toLowerCase();
 
-      if (file.type.startsWith("image/")) {
+      if (fileType.startsWith("image/")) {
         previewContent = `
-          <div class="relative w-full h-full flex items-center justify-center">
-            <img src="${e.target.result}" class="max-w-full max-h-full object-contain mx-auto" />
-          </div>`;
-      } else if (file.type.startsWith("video/")) {
+          <img src="${e.target.result}" 
+               class="w-auto h-auto max-w-full max-h-full object-contain" />`;
+      } else if (fileType.startsWith("video/") && fileExtension !== "mkv") {
         previewContent = `
-          <div class="relative w-full h-full flex items-center justify-center">
-            <video controls class="max-w-full max-h-full object-contain mx-auto">
-              <source src="${e.target.result}" type="${file.type}">
-              Your browser does not support the video tag.
-            </video>
-          </div>`;
+          <video controls 
+                 class="w-auto h-auto max-w-full max-h-full object-contain">
+            <source src="${e.target.result}" type="${fileType}">
+            Your browser does not support the video tag.
+          </video>`;
       } else {
         previewContent = `<div class="text-white text-center">Preview not available for this file type.</div>`;
       }
 
       this.previewTarget.innerHTML = previewContent;
       this.fileButtonTarget.classList.add("hidden");
-
-      // Add delete button
-      const deleteButton = document.createElement("button");
-      deleteButton.type = "button";
-      deleteButton.dataset.action = "click->asset#deleteMedia";
-      deleteButton.classList.add(
-        "absolute",
-        "top-2",
-        "right-2",
-        "w-8",
-        "h-8",
-        "bg-gray-800",
-        "rounded-full",
-        "p-1",
-        "hover:bg-red-600"
-      );
-      deleteButton.innerHTML = "🗑️";
-      this.previewTarget.appendChild(deleteButton);
+      this.deleteButtonTarget.classList.remove("hidden");
     };
 
     reader.readAsDataURL(file);
@@ -91,5 +83,6 @@ export default class extends Controller {
     this.previewTarget.innerHTML = "";
     this.inputTarget.value = "";
     this.fileButtonTarget.classList.remove("hidden");
+    this.deleteButtonTarget.classList.add("hidden");
   }
 }

@@ -1,7 +1,7 @@
 class ImageUploader < CarrierWave::Uploader::Base
   # Include RMagick, MiniMagick, or Vips support:
   # include CarrierWave::RMagick
-  # include CarrierWave::MiniMagick
+  include CarrierWave::MiniMagick
   # include CarrierWave::Vips
 
   # Choose what kind of storage to use for this uploader:
@@ -12,6 +12,34 @@ class ImageUploader < CarrierWave::Uploader::Base
   # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir
     "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+  end
+
+  process :enforce_aspect_ratio
+
+  def enforce_aspect_ratio
+    manipulate! do |img|
+      aspect_ratio = 16.0 / 9.0 # Change as needed
+      width = img[:width].to_f
+      height = img[:height].to_f
+      current_ratio = width / height
+
+      if current_ratio > aspect_ratio
+        new_height = width / aspect_ratio
+        img.combine_options do |c|
+          c.gravity "center"
+          c.background "black"
+          c.extent "#{width}x#{new_height}"
+        end
+      elsif current_ratio < aspect_ratio
+        new_width = height * aspect_ratio
+        img.combine_options do |c|
+          c.gravity "center"
+          c.background "black"
+          c.extent "#{new_width}x#{height}"
+        end
+      end
+      img
+    end
   end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:

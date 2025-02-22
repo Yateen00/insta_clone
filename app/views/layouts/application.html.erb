@@ -29,8 +29,8 @@
 
     <%= render "layouts/flash" %>
 
-    <div class="w-full flex justify-center">
-      <div class="w-full max-w-3xl mt-4">
+    <div class="w-full flex justify-center ">
+      <div class=" mt-4 ">
         <%= content_for?(:body) ? yield(:body) : render(template: "layouts/default") %>
       </div>
     </div>
