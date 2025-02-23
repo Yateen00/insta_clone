@@ -27,6 +27,7 @@ This is a full-featured Instagram clone built with **Ruby on Rails** as the fina
 - **Tagging System**: Allow users to tag others in comments and posts.
 - **Smart Feed Algorithm**: Implement an intelligent ranking system for displaying posts.
 - **Lazy Loading**: Improve performance with infinite scrolling for posts and comments.
+-  **Create Tests**: I focused on getting the features working, and testing only on terminal. Plan to create a test suite and learn to use Guard
 
 ## Setup Instructions
 
