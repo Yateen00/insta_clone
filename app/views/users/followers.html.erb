@@ -1,0 +1,4 @@
+<h2 class="text-xl font-bold mb-4">Followers</h2>
+<% @followers.each do |follower| %>
+  <%= render "profiles/banner", user: follower, show_remove_button: current_user == @user %>
+<% end %>

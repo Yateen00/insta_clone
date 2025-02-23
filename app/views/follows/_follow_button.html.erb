@@ -1,0 +1,15 @@
+ <% if current_user !=user%>
+  <div id="<%= dom_id(user, :follow_button) %>">
+    <% if current_user.follows?(user) %>
+      <%= button_to toggle_follow_user_path(user), method: :post, remote: true,
+            class: "bg-red-500 text-white px-4 py-2 rounded-md font-semibold border border-red-700 hover:bg-red-600 transition duration-300 ease-in-out" do %>
+        Unfollow
+      <% end %>
+    <% else %>
+      <%= button_to toggle_follow_user_path(user), method: :post, remote: true,
+            class: "bg-blue-500 text-white px-4 py-2 rounded-md font-semibold border border-blue-700 hover:bg-blue-600 transition duration-300 ease-in-out" do %>
+        Follow
+      <% end %>
+    <% end %>
+  </div>
+<% end %>

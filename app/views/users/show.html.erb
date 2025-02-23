@@ -13,7 +13,10 @@
   </p>
   <p><strong>Bio:</strong> <%= @user.profile.bio %></p>
 
-  <% if current_user == @user %>
-    <%= link_to 'Edit Profile', edit_profile_path(@user.profile), class: "mt-4 inline-block bg-blue-500 text-white py-2 px-4 rounded" %>
-  <% end %>
-</div>
+  <div class="flex items-center justify-center space-x-4 mt-4">
+    <%= render "follows/follow_button",user: @user%>
+    <%= render "follows/follow_counts" ,user: @user%>
+    <% if current_user == @user %>
+      <%= link_to 'Edit Profile', edit_profile_path(@user.profile), class: " inline-block bg-blue-500 text-white py-2 px-4 rounded" %>
+    <% end %>
+  </div>

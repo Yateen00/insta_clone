@@ -1,0 +1,9 @@
+<div id="<%= dom_id(user, :follow_counts) %>" class="flex space-x-4">
+  <%= link_to followers_user_path(user), class: "inline-block bg-blue-500 text-white py-2 px-4 rounded" do %>
+    <strong><%= user.followers_count %></strong> Followers
+  <% end %>
+
+  <%= link_to follows_user_path(user), class: " inline-block bg-blue-500 text-white py-2 px-4 rounded" do %>
+    <strong><%= user.follows_count %></strong> Following
+  <% end %>
+</div>

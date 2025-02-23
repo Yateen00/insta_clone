@@ -10,7 +10,14 @@ Rails.application.routes.draw do
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  resources :users, only: [:show]
+  resources :users, only: [:show] do
+    member do
+      post "toggle_follow", to: "follows#toggle"
+      post "remove_follower", to: "follows#remove_follower"
+      get "followers", to: "users#followers"
+      get "follows", to: "users#follows"
+    end
+  end
   resources :profiles, only: %i[edit update]
   resources :posts do
     member do

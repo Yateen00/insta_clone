@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_22_164541) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_23_160630) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -26,6 +26,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_22_164541) do
     t.index ["post_id"], name: "index_comments_on_post_id"
     t.index ["reply_to_id"], name: "index_comments_on_reply_to_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "follows", force: :cascade do |t|
+    t.bigint "follower_id", null: false
+    t.bigint "followee_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["followee_id"], name: "index_follows_on_followee_id"
+    t.index ["follower_id", "followee_id"], name: "index_follows_on_follower_id_and_followee_id", unique: true
+    t.index ["follower_id"], name: "index_follows_on_follower_id"
   end
 
   create_table "images", force: :cascade do |t|
@@ -91,6 +101,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_22_164541) do
     t.string "provider"
     t.string "uid"
     t.string "username"
+    t.integer "followers_count", default: 0
+    t.integer "follows_count", default: 0
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -106,6 +118,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_22_164541) do
   add_foreign_key "comments", "comments", column: "reply_to_id"
   add_foreign_key "comments", "posts"
   add_foreign_key "comments", "users"
+  add_foreign_key "follows", "users", column: "followee_id"
+  add_foreign_key "follows", "users", column: "follower_id"
   add_foreign_key "likes", "users"
   add_foreign_key "posts", "users", column: "creator_id"
   add_foreign_key "profiles", "users"

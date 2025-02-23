@@ -1,0 +1,20 @@
+<div id="<%= dom_id(user, :follower) %>" class="flex items-center justify-between p-3 rounded-lg shadow mb-3">
+
+  <div class="flex items-center space-x-3">
+    <%= link_to user_path(user), class: "flex items-center" do %>
+      <%= image_tag user.profile.profile_picture.url, class: "h-10 w-10 rounded-full" %>
+      <span class="font-bold pl-2"><%= user.username %></span>
+    <% end %>
+  </div>
+
+  <div class="flex items-center space-x-2">
+    <%= render "follows/follow_button", user: user %>
+
+    <% if local_assigns[:show_remove_button] %>
+      <%= button_to remove_follower_user_path(user), method: :post, remote: true,
+          class: "bg-red-500 text-white px-4 py-2 rounded-md font-semibold border border-red-700 hover:bg-red-600 transition duration-300 ease-in-out" do %>
+        Remove
+      <% end %>
+    <% end %>
+  </div>
+</div>

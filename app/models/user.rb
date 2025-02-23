@@ -1,6 +1,14 @@
 class User < ApplicationRecord
   attr_writer :login
 
+  has_many :follows_as_follower, class_name: "Follow", foreign_key: "follower_id", dependent: :destroy,
+                                 inverse_of: :follower
+  has_many :follows_as_followee, class_name: "Follow", foreign_key: "followee_id", dependent: :destroy,
+                                 inverse_of: :followee
+
+  has_many :follows, through: :follows_as_follower, source: :followee
+  has_many :followers, through: :follows_as_followee, source: :follower
+
   has_many :posts, foreign_key: "creator_id", dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :likes, dependent: :destroy
@@ -41,6 +49,24 @@ class User < ApplicationRecord
 
   def liked?(likeable)
     likes.exists?(likeable: likeable)
+  end
+
+  def follows?(user)
+    follows.include?(user)
+  end
+
+  def follow(user)
+    follows << user unless follows?(user)
+  end
+
+  # Unfollow another user
+  def unfollow(user)
+    follows.delete(user)
+  end
+
+  # Toggle follow/unfollow
+  def toggle_follow(user)
+    follows?(user) ? unfollow(user) : follow(user)
   end
 
   private

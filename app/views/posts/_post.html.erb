@@ -1,11 +1,5 @@
 <div class="bg-gray-800 text-white p-4 rounded-lg">
-  <div class="flex items-center mb-4">
-    <%= link_to user_path(post.creator) do %>
-      <%= image_tag post.creator.profile.profile_picture.url, class: "h-10 w-10 rounded-full mr-2" %>
-      <span class="font-bold"><%= post.creator.username %></span>
-    <% end %>
-  </div>
-
+  <%= render "profiles/banner", user: post.creator%>
   <div class="mb-4 w-full h-80 flex items-center justify-center bg-gray-700 rounded-lg overflow-hidden">
     <%= render "posts/content", post: post %>
   </div>
