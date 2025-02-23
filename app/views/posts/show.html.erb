@@ -12,7 +12,7 @@
 <%= turbo_frame_tag "post_comment_form" do %>
   <%= render "comments/form", post: @post, comment: @comment  %>
 <% end %>
-<div data-controller="comments">
+<div data-controller="comments" class="pr-3 bg-gray-800">
   <%= turbo_frame_tag "post_#{@post.id}_comments" do %>
     <%= render partial: "comments/comment", collection: @post.comments.where(reply_to_id: nil).order_by_user(current_user.id).order(created_at: :desc) %>
   <% end %>

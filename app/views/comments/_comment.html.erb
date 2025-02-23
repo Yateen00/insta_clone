@@ -1,8 +1,9 @@
 <%= turbo_frame_tag "comment_#{comment.id}" do %>
-  <div id="comment_<%= comment.id %>" class="p-4 bg-gray-800 text-white rounded-lg mb-2">
-    <div class="flex justify-between items-center">
-      <span class="text-sm text-gray-400"><%= comment.user.username %> - 
-        <% if comment.created_at== comment.updated_at%>
+  <div id="comment_<%= comment.id %>" class="p-3 pr-0 bg-gray-800 text-white">
+    <div class="flex justify-between items-center w-full">
+      <span class="text-sm text-gray-400 flex-1">
+        <%= comment.user.username %> - 
+        <% if comment.created_at == comment.updated_at %>
           <%= time_ago_in_words(comment.created_at) %>
         <% else %>
           Edited <%= time_ago_in_words(comment.updated_at) %>
@@ -11,30 +12,32 @@
       </span>
       <div class="flex gap-2">
         <% if comment.user == current_user %>
-          <%= link_to "Edit", edit_post_comment_path(comment.post, comment), class: "text-blue-400 hover:underline text-sm"%>
+          <%= link_to "Edit", edit_post_comment_path(comment.post, comment), class: "text-blue-400 hover:underline text-sm" %>
           <%= link_to "Delete", post_comment_path(comment.post, comment), method: :delete, data: { turbo_confirm: "Are you sure?", turbo_method: :delete }, class: "text-red-400 hover:underline text-sm" %>
         <% end %>
       </div>
     </div>
 
-    <p class="mt-2"><%= comment.content %></p>
+    <p class="mt-1"><%= comment.content %></p>
 
-    <div class="flex gap-2 mt-2">
+    <div class="flex gap-2 items-center mt-1">
       <button 
         data-action="click->comments#showReplyForm"
         data-comments-reply-to-id="<%= comment.id %>"
         class="text-blue-400 hover:underline text-sm">
-        Reply
+        Reply 
       </button>
+      <% if comment.replies_count > 0 %>
+        <span class="text-blue-400 hover:underline text-sm">| <%= pluralize(comment.replies.count, 'Reply') %></span>
+      <% end %>
     </div>
 
     <div id="reply_form_container_<%= comment.id %>"></div>
 
-    <div id="replies_for_<%= comment.id %>" class="nested-replies space-y-2 ml-4 mt-2">
+    <div id="replies_for_<%= comment.id %>" class="nested-replies space-y-0.5 ml-4 mt-1">
       <% comment.replies.order_by_user(current_user.id).order(created_at: :desc).each do |reply| %>
         <%= render "comments/comment", comment: reply %>
       <% end %>
     </div>
-
   </div>
 <% end %>
