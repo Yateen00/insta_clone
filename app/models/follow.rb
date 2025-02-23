@@ -7,4 +7,18 @@ class Follow < ApplicationRecord
   def self_follow
     errors.add(:base, "You cannot follow yourself") if follower_id == followee_id
   end
+
+  after_create :create_notification
+  before_destroy :delete_notification
+
+  private
+    def create_notification
+      return if follower == followee # Don't notify if following self
+
+      Notification.create(user: followee, notifiable: self)
+    end
+
+    def delete_notification
+      Notification.find_by(user: followee, notifiable: self)&.destroy
+    end
 end

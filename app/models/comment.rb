@@ -8,8 +8,22 @@ class Comment < ApplicationRecord
   scope :order_by_user, lambda { |user_id|
     order(Arel.sql("CASE WHEN user_id = #{user_id} THEN 0 ELSE 1 END"))
   }
+  after_create :create_notification
+  before_destroy :delete_notification
 
   private
+    def create_notification
+      return if user == post.creator # Don't notify if commenting on own post
+
+      Notification.create(user: post.creator, notifiable: self)
+      Notification.create(user: reply_to.user, notifiable: self) if reply_to
+    end
+
+    def delete_notification
+      Notification.find_by(user: post.creator, notifiable: self)&.destroy
+      Notification.find_by(user: reply_to.user, notifiable: self)&.destroy if reply_to
+    end
+
     def content_not_empty
       errors.add(:content, "can't be empty") if content.strip.empty?
     end

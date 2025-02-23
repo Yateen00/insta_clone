@@ -1,0 +1,21 @@
+<h2 class="text-xl font-bold mb-4">Notifications</h2>
+
+<% if @notifications.any? %>
+  <ul>
+    <% @notifications.unread.each do |notification| %>
+      <li class="flex justify-between items-center bg-gray-800 p-3 rounded-md mb-2">
+        <span><%= notification_message(notification) %></span>
+
+        <%= button_to mark_as_read_notification_path(notification), method: :patch, remote: true,
+              class: "text-sm text-gray-500 hover:text-gray-700" do %>
+          Mark as Read
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+
+  <%= button_to "Clear All", clear_user_notifications_path(current_user), method: :delete,
+        class: "mt-4 bg-red-500 text-white px-4 py-2 rounded-md" %>
+<% else %>
+  <p class="text-gray-500">No new notifications.</p>
+<% end %>

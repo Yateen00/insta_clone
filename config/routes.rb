@@ -17,7 +17,16 @@ Rails.application.routes.draw do
       get "followers", to: "users#followers"
       get "follows", to: "users#follows"
     end
+    resources :notifications, only: [:index], shallow: true do
+      member do
+        patch :mark_as_read
+      end
+      collection do
+        delete :clear
+      end
+    end
   end
+
   resources :profiles, only: %i[edit update]
   resources :posts do
     member do
