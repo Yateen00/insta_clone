@@ -1,0 +1,15 @@
+<div class="flex items-center space-x-2" id="<%= dom_id(likeable, :likes) %>">
+  <%= form_with url: like_path(likeable), method: :post, remote: true do |form| %>
+    <%= form.hidden_field :size, value: size %>
+    <%= form.hidden_field :type,value: likeable.class%>
+    <button type="submit" class="bg-transparent border-none p-0">
+      <% if current_user.liked?(likeable) %>
+        <%= image_tag 'liked.svg', size: size, alt: "Unlike" %>
+      <% else %>
+        <%= image_tag 'not_liked.svg', size: size, alt: "Like" %>
+      <% end %>
+    </button>
+  <% end %>
+
+  <span><%= pluralize(likeable.likes_count, 'likes') %></span>
+</div>

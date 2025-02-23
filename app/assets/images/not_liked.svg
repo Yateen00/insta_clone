@@ -1,0 +1,9 @@
+<svg width="" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <!-- Heart with black border and transparent inner -->
+    <path d="M50 30 
+             C 35 10, 5 10, 5 35 
+             C 5 50, 25 65, 50 80 
+             C 75 65, 95 50, 95 35 
+             C 95 10, 65 10, 50 30 Z" 
+          fill="transparent" stroke="black" stroke-width="3"/>
+  </svg>

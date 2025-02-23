@@ -28,8 +28,9 @@
         Reply 
       </button>
       <% if comment.replies_count > 0 %>
-        <span class="text-blue-400 hover:underline text-sm">| <%= pluralize(comment.replies.count, 'Reply') %></span>
+        <span class="text-blue-400 hover:underline text-sm">| <%= pluralize(comment.replies_count, 'Reply') %></span>
       <% end %>
+      <%= render 'likes/like_button', likeable: comment, size: "16x16" %>
     </div>
 
     <div id="reply_form_container_<%= comment.id %>"></div>

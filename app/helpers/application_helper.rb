@@ -16,4 +16,15 @@ module ApplicationHelper
       "#{base_classes} bg-gray-100 text-gray-800"
     end
   end
+
+  def like_path(likeable)
+    case likeable
+    when Post
+      like_post_path(likeable)
+    when Comment
+      like_post_comment_path(likeable.post, likeable)
+    else
+      raise ArgumentError, "Unsupported likeable type: #{likeable.class}"
+    end
+  end
 end

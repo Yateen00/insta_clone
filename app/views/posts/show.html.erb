@@ -1,13 +1,7 @@
 <h1 class="text-2xl font-bold mb-4 text-white">Post</h1>
-<div class="space-y-4">
+<div class="space-y-4 pb-5">
   <%= render "post", post: @post %>
 </div>
-
-<h2 class="text-xl font-semibold mt-6 mb-2 text-white">
-  <%= turbo_frame_tag "post_#{@post.id}_comment_count" do %>
-    <%= pluralize(@post.comments_count, 'comment') %>
-  <%end %>
-</h2>
 
 <%= turbo_frame_tag "post_comment_form" do %>
   <%= render "comments/form", post: @post, comment: @comment  %>
@@ -26,7 +20,7 @@
         </div>
         <div class="flex justify-end items-center space-x-2">
           <%= f.submit "Reply", class: "bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg mb-4" %>
-          <button type="button" data-action="click->comments#cancelReply" class="text-red-400 hover:underline text-sm">Cancel</button>
+          <button type="button" data-action="click->comments#cancelReply" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg mb-4">Cancel</button>
         </div>
       <% end %>
     <% end %>

@@ -13,8 +13,12 @@ Rails.application.routes.draw do
   resources :users, only: [:show]
   resources :profiles, only: %i[edit update]
   resources :posts do
+    member do
+      post "like", to: "likes#like"
+    end
     resources :comments do
       member do
+        post "like", to: "likes#like"
         get "cancel_edit"
       end
       # collection do
@@ -27,7 +31,7 @@ Rails.application.routes.draw do
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
-  root "test#index"
+  root "posts#index"
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
