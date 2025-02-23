@@ -1,0 +1,18 @@
+<%= turbo_frame_tag "post_comment_form_#{comment.id || 'new'}" do %>
+  <%= form_with model: [post, comment], class: "space-y-2 comment-form" do |f| %>
+    <%= render "devise/shared/error_messages", resource: comment %>
+    <div>
+      <%= f.text_area :content, class: "w-full h-auto bg-gray-700 text-white p-2 rounded-lg resize-none", placeholder: "Write a comment..." %>
+    </div>
+    <div class="flex justify-end items-center space-x-2">
+      <%= f.submit comment.persisted? ? "Update" : "Post", class: "bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg mb-4" %>
+
+      <% if comment.persisted? %>
+        <%= link_to "Cancel", cancel_edit_post_comment_path(post, comment, format: :turbo_stream), 
+        data: { turbo_frame: "comment_#{comment.id}", turbo_method: "get", turbo: false }, 
+        class: "bg-red-400 hover:bg-red-600 text-white px-4 py-2 rounded-lg mb-4" %>
+
+      <% end %>
+    </div>
+  <% end %>
+<% end %>

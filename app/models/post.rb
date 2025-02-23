@@ -5,7 +5,7 @@ class Post < ApplicationRecord
   validates :postable, presence: true
   validates :description, length: { maximum: 500 }
 
-  # has_many :likes, as: :likeable, dependent: :destroy
+  has_many :likes, as: :likeable, dependent: :destroy
   has_many :comments, dependent: :destroy
   POSTABLE_TYPES = %w[Text Image Video].freeze
   # def build_postable(type)
@@ -46,5 +46,4 @@ class Post < ApplicationRecord
       postable_type == type
     end
   end
-
 end

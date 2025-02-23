@@ -27,12 +27,14 @@
       <%= render "layouts/user_links" %>
     </nav>
 
-    <%= render "layouts/flash" %>
+    <turbo-frame id="flash_messages">
+      <%= render "layouts/flash" %>
+    </turbo-frame>
 
     <div class="w-full flex justify-center ">
-      <div class=" mt-4 ">
-        <%= content_for?(:body) ? yield(:body) : render(template: "layouts/default") %>
-      </div>
+
+      <%= content_for?(:body) ? yield(:body) : render(template: "layouts/default") %>
+
     </div>
   </body>
 </html>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_22_163729) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_22_164541) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -22,6 +22,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_22_163729) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "replies_count", default: 0
+    t.integer "likes_count", default: 0
     t.index ["post_id"], name: "index_comments_on_post_id"
     t.index ["reply_to_id"], name: "index_comments_on_reply_to_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
@@ -33,6 +34,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_22_163729) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "likes", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "likeable_type", null: false
+    t.bigint "likeable_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["likeable_type", "likeable_id"], name: "index_likes_on_likeable"
+    t.index ["user_id"], name: "index_likes_on_user_id"
+  end
+
   create_table "posts", force: :cascade do |t|
     t.string "postable_type", null: false
     t.bigint "postable_id", null: false
@@ -41,6 +52,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_22_163729) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "comments_count", default: 0
+    t.integer "likes_count", default: 0
     t.index ["creator_id"], name: "index_posts_on_creator_id"
     t.index ["postable_type", "postable_id"], name: "index_posts_on_postable"
   end
@@ -94,6 +106,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_22_163729) do
   add_foreign_key "comments", "comments", column: "reply_to_id"
   add_foreign_key "comments", "posts"
   add_foreign_key "comments", "users"
+  add_foreign_key "likes", "users"
   add_foreign_key "posts", "users", column: "creator_id"
   add_foreign_key "profiles", "users"
 end

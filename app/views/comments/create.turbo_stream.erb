@@ -1,0 +1,24 @@
+<% if @comment.reply_to_id.present? %>
+  <!-- ✅ Append reply under the correct parent -->
+  <%= turbo_stream.append "replies_for_#{@comment.reply_to_id}" do %>
+    <%= render partial: "comments/comment", locals: { comment: @comment } %>
+  <% end %>
+
+  <!-- ✅ Remove the reply form after submission -->
+  <%= turbo_stream.remove "reply_form_container_#{@comment.reply_to_id}" %>
+  <%= turbo_stream.remove "reply_form" %>
+<% else %>
+  <!-- ✅ Prepend top-level comments properly -->
+  <%= turbo_stream.prepend "post_#{@post.id}_comments" do %>
+    <%= render partial: "comments/comment", locals: { comment: @comment } %>
+  <% end %>
+
+  <!-- ✅ Reset the top-level form -->
+  <%= turbo_stream.replace "post_comment_form" do %>
+    <%= render partial: "comments/form", locals: { post: @post, comment: Comment.new } %>
+  <% end %>
+<% end %>
+
+<%= render partial: "comments/comment_count", locals: { post: @post } %>
+
+<%= render partial: "layouts/flash" %>

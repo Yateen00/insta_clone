@@ -1,0 +1,7 @@
+<turbo-stream action="append" target="comments-list">
+  <template>
+    <% @comments.each do |comment| %>
+      <%= render "comments/comment", comment: comment %>
+    <% end %>
+  </template>
+</turbo-stream>

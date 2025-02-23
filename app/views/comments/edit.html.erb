@@ -1,0 +1,5 @@
+<%= turbo_frame_tag "comment_#{@comment.id}" do %>
+  <div class="">
+    <%= render "comments/form", comment: @comment, post: @post %>
+  </div>
+<% end %>

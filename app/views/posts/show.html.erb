@@ -1,5 +1,35 @@
-  
 <h1 class="text-2xl font-bold mb-4 text-white">Post</h1>
 <div class="space-y-4">
-  <%= render "post",post: @post%>
+  <%= render "post", post: @post %>
+</div>
+
+<h2 class="text-xl font-semibold mt-6 mb-2 text-white">
+  <%= turbo_frame_tag "post_#{@post.id}_comment_count" do %>
+    <%= pluralize(@post.comments_count, 'comment') %>
+  <%end %>
+</h2>
+
+<%= turbo_frame_tag "post_comment_form" do %>
+  <%= render "comments/form", post: @post, comment: @comment  %>
+<% end %>
+<div data-controller="comments">
+  <%= turbo_frame_tag "post_#{@post.id}_comments" do %>
+    <%= render partial: "comments/comment", collection: @post.comments.where(reply_to_id: nil).order_by_user(current_user.id).order(created_at: :desc) %>
+  <% end %>
+
+  <!-- Move the template inside the controller scope -->
+  <template data-comments-target="replyFormTemplate">
+    <%= turbo_frame_tag "reply_form" do %>
+      <%= form_with model: [@post, Comment.new], class: "space-y-2 reply-form hidden" do |f| %>
+        <%= f.hidden_field :reply_to_id %>
+        <div>
+          <%= f.text_area :content, class: "w-full h-auto bg-gray-700 text-white p-2 rounded-lg resize-none", placeholder: "Write a reply..." %>
+        </div>
+        <div class="flex justify-end items-center space-x-2">
+          <%= f.submit "Reply", class: "bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg mb-4" %>
+          <button type="button" data-action="click->comments#cancelReply" class="text-red-400 hover:underline text-sm">Cancel</button>
+        </div>
+      <% end %>
+    <% end %>
+  </template>
 </div>

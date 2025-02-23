@@ -8,6 +8,7 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.find(params[:id])
+    @comment = @post.comments.new
   end
 
   def new
@@ -62,7 +63,7 @@ class PostsController < ApplicationController
 
   private
     def post_params
-      params.require(:post).permit(:title, :description, postable_attributes: [:content])
+      params.expect(post: [:title, :description, { postable_attributes: [:content] }])
     end
 
     def determine_postable_type(content)

@@ -1,0 +1,4 @@
+<%= render partial: "layouts/flash" %>
+
+<%= turbo_stream.remove "comment_#{@comment.id}" %>
+<%=render partial: "comments/comment_count", locals: { post: @post } %>
