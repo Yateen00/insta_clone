@@ -3,7 +3,7 @@ class UserMailer < ApplicationMailer
 
   def welcome_email(user)
     @user = user
-    @url  = "http://example.com/login"
+    @url = "https://insta-clone-r4eg.onrender.com"
     mail(to: @user.email, subject: "Welcome to Insta Clone")
   end
 end
