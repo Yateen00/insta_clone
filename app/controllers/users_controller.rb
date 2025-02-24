@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[show followers follows]
+  before_action :authenticate_user!
   def show; end
 
   def followers
