@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   layout "form", only: %i[new edit]
-  before_action :authenticate_user!, except: %i[index show]
+  before_action :authenticate_user!
 
   def index
     @posts = Post.all
