@@ -1,4 +1,4 @@
-<%= form_with model: post, local: true, html: { multipart: true, data: { controller: "asset" } } do |form| %>
+<%= form_with model: post,html: { multipart: true, data: { controller: "asset" } } do |form| %>
   <%= render "devise/shared/error_messages", resource: post %>
 
   <!-- to change min width -->
