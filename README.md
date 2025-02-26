@@ -22,7 +22,8 @@ This is a full-featured Instagram clone built with **Ruby on Rails** as the fina
 - **Chat Feature**: Show posts to users that aren't logged in.
 - **UI Improvements**: More consistent and polished user experience with UI that works across screens sizes.
 - **Improve image processing**: tranfer to activestorage and improved media processing and storage. 
-- **Deployment & Email Testing**: Deploy the app and refine email notifications.
+- ~~**Deployment**: Deploy the app~~  done
+- **Send emails**: Setup sending emails in deployment with forget password,welcome,etc.
 - **Markdown Support**: Enable Markdown formatting for text posts and comments.
 - **Tagging System**: Allow users to tag others in comments and posts.
 - **Smart Feed Algorithm**: Implement an intelligent ranking system for displaying posts.
