@@ -1,6 +1,6 @@
 <h2 class="text-2xl font-bold mb-4 text-white">Edit Profile</h2>
-
-<%= form_for(@profile, html: { class: "space-y-6", multipart: true, data: { controller: "reset-form" } }) do |f| %>
+<!-- , data: { controller: "reset-form" } -->
+<%= form_for(@profile, html: { class: "space-y-6", multipart: true }) do |f| %>
   <%= render "users/shared/error_messages", resource: @profile %>
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
     <%= f.fields_for :user do |user_fields| %>
