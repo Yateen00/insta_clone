@@ -38,7 +38,7 @@
 
     <div class="field">
       <%= f.label :dob, "Date of Birth", class: "block text-sm font-medium text-white" %>
-      <%= f.date_select :dob, start_year: 1900, end_year: Time.now.year, class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
+      <%= f.date_field :dob, min: "1920-01-01", max: Time.now.strftime("%Y-%m-%d"), class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
     </div>
   </div>
 
