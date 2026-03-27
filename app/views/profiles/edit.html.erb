@@ -8,6 +8,10 @@
         <%= user_fields.label :username, class: "block text-sm font-medium text-white" %>
         <%= user_fields.text_field :username, class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
       </div>
+      <div class="field flex items-center space-x-3">
+        <%= user_fields.label :private_account, "Private Account", class: "text-sm font-medium text-white" %>
+        <%= user_fields.check_box :private_account, class: "h-4 w-4 text-indigo-600 border-gray-300 rounded" %>
+      </div>
     <% end %>
 
     <div class="field" data-controller="profile-picture">

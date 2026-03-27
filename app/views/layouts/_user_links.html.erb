@@ -7,6 +7,12 @@
 
     <div class="flex items-center space-x-4">
       <%= link_to "Notifications (#{current_user.notifications.unread.count})", user_notifications_path(current_user), class: "mr-4" %>
+      <% if current_user.private_account? %>
+        <% pending_count = current_user.pending_follow_requests.count %>
+        <%= link_to follow_requests_user_path(current_user), class: "mr-4" do %>
+          Follow Requests<% if pending_count > 0 %> (<%= pending_count %>)<% end %>
+        <% end %>
+      <% end %>
       <%= link_to user_path(current_user), class: "hover:text-indigo-800 px-3 py-1 rounded" do %>
         <%= image_tag current_user.profile.profile_picture_url, alt: "Profile Picture", class: "h-8 w-8 rounded-full" %>
       <% end %>

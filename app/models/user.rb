@@ -6,8 +6,8 @@ class User < ApplicationRecord
   has_many :follows_as_followee, class_name: "Follow", foreign_key: "followee_id", dependent: :destroy,
                                  inverse_of: :followee
   has_many :notifications, dependent: :destroy
-  has_many :follows, through: :follows_as_follower, source: :followee
-  has_many :followers, through: :follows_as_followee, source: :follower
+  has_many :follows, -> { merge(Follow.accepted) }, through: :follows_as_follower, source: :followee
+  has_many :followers, -> { merge(Follow.accepted) }, through: :follows_as_followee, source: :follower
 
   has_many :posts, foreign_key: "creator_id", dependent: :destroy
   has_many :comments, dependent: :destroy
@@ -52,21 +52,48 @@ class User < ApplicationRecord
   end
 
   def follows?(user)
-    follows.include?(user)
+    follows_as_follower.accepted.exists?(followee: user)
+  end
+
+  def follow_requested?(user)
+    follows_as_follower.pending.exists?(followee: user)
   end
 
   def follow(user)
-    follows << user unless follows?(user)
+    return if follows?(user) || follow_requested?(user)
+    status = user.private_account? ? :pending : :accepted
+    follows_as_follower.create(followee: user, status: status)
   end
 
-  # Unfollow another user
+  # Unfollow another user (also cancels a pending request)
   def unfollow(user)
-    follows.delete(user)
+    follows_as_follower.where(followee: user).destroy_all
   end
 
-  # Toggle follow/unfollow
+  # Toggle follow/unfollow (or request/cancel request)
   def toggle_follow(user)
-    follows?(user) ? unfollow(user) : follow(user)
+    (follows?(user) || follow_requested?(user)) ? unfollow(user) : follow(user)
+  end
+
+  # Remove a follower (or reject a pending request from them)
+  def remove_follower(user)
+    follows_as_followee.where(follower: user).destroy_all
+  end
+
+  # Accept a pending follow request
+  def accept_follow_request(user)
+    follow = follows_as_followee.pending.find_by(follower: user)
+    follow&.update(status: :accepted)
+  end
+
+  # Reject a pending follow request
+  def reject_follow_request(user)
+    follows_as_followee.pending.where(follower: user).destroy_all
+  end
+
+  # Pending follow requests received by this user
+  def pending_follow_requests
+    follows_as_followee.pending.includes(:follower)
   end
 
   private

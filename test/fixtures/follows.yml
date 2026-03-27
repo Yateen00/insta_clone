@@ -3,7 +3,9 @@
 one:
   follower: one
   followee: one
+  status: 1
 
 two:
   follower: two
   followee: two
+  status: 1
