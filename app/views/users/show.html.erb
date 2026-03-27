@@ -3,11 +3,7 @@
 <div class="profile mb-8">
   <%= image_tag @user.profile.profile_picture.url, class: "h-20 w-20 rounded-full mb-4" %>
   <p><strong>Name:</strong> <%= @user.profile.name %></p>
-  <p><strong>Username:</strong> <%= @user.username %>
-    <% if @user.private_account? %>
-      <span class="ml-1 text-xs bg-gray-700 text-gray-300 px-2 py-0.5 rounded-full">&#128274; Private</span>
-    <% end %>
-  </p>
+  <p><strong>Username:</strong> <%= @user.username %></p>
   <p><strong>Gender:</strong> <%= @user.profile.gender %></p>
   <p><strong>Date of Birth:</strong> <%= @user.profile.dob %></p>
   <p><strong>Website Link:</strong>
@@ -22,18 +18,5 @@
     <%= render "follows/follow_counts" ,user: @user%>
     <% if current_user == @user %>
       <%= link_to 'Edit Profile', edit_profile_path(@user.profile), class: " inline-block bg-blue-500 text-white py-2 px-4 rounded" %>
-      <%= button_to toggle_private_user_path(@user), method: :patch,
-            class: "inline-block bg-gray-600 text-white py-2 px-4 rounded hover:bg-gray-700 transition duration-300" do %>
-        <%= @user.private_account? ? "Switch to Public" : "Switch to Private" %>
-      <% end %>
-      <% if @user.private_account? %>
-        <%= link_to follow_requests_user_path(@user), class: "inline-block bg-indigo-600 text-white py-2 px-4 rounded hover:bg-indigo-700 transition duration-300" do %>
-          Follow Requests
-          <% pending_count = @user.pending_follow_requests.count %>
-          <% if pending_count > 0 %>
-            <span class="ml-1 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full"><%= pending_count %></span>
-          <% end %>
-        <% end %>
-      <% end %>
     <% end %>
   </div>

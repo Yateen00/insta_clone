@@ -14,12 +14,8 @@ Rails.application.routes.draw do
     member do
       post "toggle_follow", to: "follows#toggle"
       post "remove_follower", to: "follows#remove_follower"
-      post "accept_follow_request", to: "follows#accept_follow_request"
-      post "reject_follow_request", to: "follows#reject_follow_request"
       get "followers", to: "users#followers"
       get "follows", to: "users#follows"
-      get "follow_requests", to: "users#follow_requests"
-      patch "toggle_private", to: "users#toggle_private"
     end
     resources :notifications, only: [:index], shallow: true do
       member do

@@ -7,7 +7,7 @@ class FollowsController < ApplicationController
     @user.reload
     respond_to do |format|
       format.turbo_stream
-      format.html { redirect_to request.referer || root_path }
+      format.html { redirect_to request.referer || root_path, notice: message }
     end
   end
 
@@ -18,24 +18,6 @@ class FollowsController < ApplicationController
     respond_to do |format|
       format.turbo_stream
       format.html { redirect_to followers_user_path(current_user) }
-    end
-  end
-
-  def accept_follow_request
-    @follow = current_user.follows_as_followee.pending.find_by(follower: @user)
-    current_user.accept_follow_request(@user)
-    respond_to do |format|
-      format.turbo_stream
-      format.html { redirect_to follow_requests_user_path(current_user) }
-    end
-  end
-
-  def reject_follow_request
-    @follow = current_user.follows_as_followee.pending.find_by(follower: @user)
-    current_user.reject_follow_request(@user)
-    respond_to do |format|
-      format.turbo_stream
-      format.html { redirect_to follow_requests_user_path(current_user) }
     end
   end
 
