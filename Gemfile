@@ -79,5 +79,7 @@ gem "mini_magick", "~> 5.1"
 
 gem "carrierwave-video", "~> 0.6.0"
 
-gem "solargraph", require: false, group: :development
-gem "solargraph-rails", require: false, group: :development
+group :development do
+  gem "solargraph", require: false
+  gem "solargraph-rails", require: false
+end
