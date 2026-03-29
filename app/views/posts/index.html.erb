@@ -1,5 +1,5 @@
 <h1 class="text-2xl font-bold mb-4">Posts</h1>
-
+<div id="hello-root" data-name="<%= current_user.username %>"></div>
 <div class="space-y-4">
   <% @posts.each do |post| %>
     <%= render partial: 'post', locals: { post: post } %>

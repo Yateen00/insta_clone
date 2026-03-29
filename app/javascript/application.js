@@ -1,3 +1,16 @@
-// Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
 import "@hotwired/turbo-rails";
-import "controllers";
+import "./controllers";
+
+import React from "react";
+import { mountReactComponent } from "./react/mount";
+import Hello from "./components/Hello";
+
+document.addEventListener("turbo:load", () => {
+  const el = document.getElementById("hello-root");
+
+  if (el) {
+    mountReactComponent(Hello, "hello-root", {
+      name: el.dataset.name,
+    });
+  }
+});

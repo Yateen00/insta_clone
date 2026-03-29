@@ -1,8 +1,8 @@
-require:
-  - rubocop-minitest
-  - rubocop-packaging
+plugins:
   - rubocop-performance
   - rubocop-rails
+  - rubocop-minitest
+  - rubocop-packaging
   - rubocop-md
 
 AllCops:
@@ -204,7 +204,7 @@ Layout/IndentationStyle:
 
 # Empty lines should not have any spaces.
 Layout/TrailingEmptyLines:
-  Enabled: true
+  Enabled: false
 
 # No trailing whitespace.
 Layout/TrailingWhitespace:

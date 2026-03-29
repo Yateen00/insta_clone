@@ -17,6 +17,9 @@ class User < ApplicationRecord
   has_one :profile, dependent: :destroy, inverse_of: :user
   accepts_nested_attributes_for :profile
 
+  has_many :chat_memberships, class_name: "ChatMember", dependent: :destroy
+  has_many :chat_rooms, through: :chat_memberships
+
   after_create :create_profile
   validates :username, format: { with: /\A[a-zA-Z0-9_.-]*\z/, multiline: true,
                                  message: "can only contain letters, numbers, underscores, and periods." }

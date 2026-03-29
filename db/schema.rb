@@ -10,9 +10,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 20_250_223_182_336) do
+ActiveRecord::Schema[8.0].define(version: 20_260_329_173_100) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "chat_members", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "chat_room_id", null: false
+    t.integer "role", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chat_room_id"], name: "index_chat_members_on_chat_room_id"
+    t.index ["user_id"], name: "index_chat_members_on_user_id"
+  end
+
+  create_table "chat_rooms", force: :cascade do |t|
+    t.integer "kind", default: 0, null: false
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "chat_rooms_users", id: false, force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "chat_room_id", null: false
+  end
 
   create_table "comments", force: :cascade do |t|
     t.text "content", null: false
@@ -52,6 +74,18 @@ ActiveRecord::Schema[8.0].define(version: 20_250_223_182_336) do
     t.datetime "updated_at", null: false
     t.index %w[likeable_type likeable_id], name: "index_likes_on_likeable"
     t.index ["user_id"], name: "index_likes_on_user_id"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "chat_room_id", null: false
+    t.string "content_type", null: false
+    t.bigint "content_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chat_room_id"], name: "index_messages_on_chat_room_id"
+    t.index %w[content_type content_id], name: "index_messages_on_content"
+    t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
   create_table "notifications", force: :cascade do |t|
@@ -126,12 +160,16 @@ ActiveRecord::Schema[8.0].define(version: 20_250_223_182_336) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "chat_members", "chat_rooms"
+  add_foreign_key "chat_members", "users"
   add_foreign_key "comments", "comments", column: "reply_to_id"
   add_foreign_key "comments", "posts"
   add_foreign_key "comments", "users"
   add_foreign_key "follows", "users", column: "followee_id"
   add_foreign_key "follows", "users", column: "follower_id"
   add_foreign_key "likes", "users"
+  add_foreign_key "messages", "chat_rooms"
+  add_foreign_key "messages", "users"
   add_foreign_key "notifications", "users"
   add_foreign_key "posts", "users", column: "creator_id"
   add_foreign_key "profiles", "users"

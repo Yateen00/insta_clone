@@ -28,7 +28,7 @@ class CommentsController < ApplicationController
         format.html { redirect_to @post, notice: "Comment was successfully created." }
       else
         format.turbo_stream { flash.now[:alert] = "Comment was not created." }
-        format.html { render :new, alert: "Comment was not created.", status: :unprocessable_entity }
+        format.html { render :new, alert: "Comment was not created.", status: :unprocessable_content }
       end
     end
   end
@@ -47,7 +47,7 @@ class CommentsController < ApplicationController
         format.html { redirect_to @post, notice: "Comment was successfully updated." }
       else
         format.turbo_stream { flash.now[:alert] = "Comment was not updated." }
-        format.html { render :edit, alert: "Comment was not updated.", status: :unprocessable_entity }
+        format.html { render :edit, alert: "Comment was not updated.", status: :unprocessable_content }
       end
     end
   end
@@ -60,7 +60,7 @@ class CommentsController < ApplicationController
         format.html { redirect_to @post, notice: "Comment was successfully destroyed." }
       else
         format.turbo_stream { flash.now[:alert] = "Comment was not destroyed." }
-        format.html { redirect_to @post, alert: "Comment was not destroyed.", status: :unprocessable_entity }
+        format.html { redirect_to @post, alert: "Comment was not destroyed.", status: :unprocessable_content }
       end
     end
   end
