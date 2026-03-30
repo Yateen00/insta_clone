@@ -11,6 +11,9 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   resources :users, only: [:show] do
+    collection do
+      get "all_with_online", to: "users#all_with_online"
+    end
     member do
       post "toggle_follow", to: "follows#toggle"
       post "remove_follower", to: "follows#remove_follower"
@@ -28,6 +31,22 @@ Rails.application.routes.draw do
   end
 
   resources :profiles, only: %i[edit update]
+  
+  # Chat App React SPA
+  get "/chats", to: "chats#index"
+  get "/chats/*path", to: "chats#index"
+
+  resources :chat_rooms do
+    collection do
+      post :create_group
+      get :unread_count
+    end
+    member do
+      patch :mark_as_read
+      post :join
+    end
+    resources :messages, only: %i[index create]
+  end
   resources :posts do
     member do
       post "like", to: "likes#like"

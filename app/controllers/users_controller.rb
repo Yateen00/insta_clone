@@ -5,10 +5,17 @@ class UsersController < ApplicationController
 
   def followers
     @followers = @user.followers
+    render json: @followers.as_json(only: %i[id username online])
   end
 
   def follows
     @follows = @user.follows
+    render json: @follows.as_json(only: %i[id username online])
+  end
+
+  def all_with_online
+    users = User.all
+    render json: users.as_json(only: %i[id username online])
   end
 
   private

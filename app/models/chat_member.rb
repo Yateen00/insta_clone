@@ -3,4 +3,15 @@ class ChatMember < ApplicationRecord
 
   belongs_to :user
   belongs_to :chat_room
+
+  # Returns the count of unread messages for this member in the chat room
+  def unread_messages_count
+    last_read = last_read_at || Time.at(0)
+    chat_room.messages.where("created_at > ?", last_read).count
+  end
+
+  # Marks all messages as read up to now
+  def mark_as_read!
+    update!(last_read_at: Time.current)
+  end
 end

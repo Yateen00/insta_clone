@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 20_260_329_173_100) do
+ActiveRecord::Schema[8.0].define(version: 2026_03_30_133821) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -20,6 +20,7 @@ ActiveRecord::Schema[8.0].define(version: 20_260_329_173_100) do
     t.integer "role", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "last_read_at"
     t.index ["chat_room_id"], name: "index_chat_members_on_chat_room_id"
     t.index ["user_id"], name: "index_chat_members_on_user_id"
   end
@@ -29,11 +30,6 @@ ActiveRecord::Schema[8.0].define(version: 20_260_329_173_100) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "chat_rooms_users", id: false, force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "chat_room_id", null: false
   end
 
   create_table "comments", force: :cascade do |t|
@@ -56,7 +52,7 @@ ActiveRecord::Schema[8.0].define(version: 20_260_329_173_100) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["followee_id"], name: "index_follows_on_followee_id"
-    t.index %w[follower_id followee_id], name: "index_follows_on_follower_id_and_followee_id", unique: true
+    t.index ["follower_id", "followee_id"], name: "index_follows_on_follower_id_and_followee_id", unique: true
     t.index ["follower_id"], name: "index_follows_on_follower_id"
   end
 
@@ -72,7 +68,7 @@ ActiveRecord::Schema[8.0].define(version: 20_260_329_173_100) do
     t.bigint "likeable_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index %w[likeable_type likeable_id], name: "index_likes_on_likeable"
+    t.index ["likeable_type", "likeable_id"], name: "index_likes_on_likeable"
     t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
@@ -84,7 +80,7 @@ ActiveRecord::Schema[8.0].define(version: 20_260_329_173_100) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["chat_room_id"], name: "index_messages_on_chat_room_id"
-    t.index %w[content_type content_id], name: "index_messages_on_content"
+    t.index ["content_type", "content_id"], name: "index_messages_on_content"
     t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
@@ -95,7 +91,7 @@ ActiveRecord::Schema[8.0].define(version: 20_260_329_173_100) do
     t.boolean "read", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index %w[notifiable_type notifiable_id], name: "index_notifications_on_notifiable"
+    t.index ["notifiable_type", "notifiable_id"], name: "index_notifications_on_notifiable"
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
@@ -109,7 +105,7 @@ ActiveRecord::Schema[8.0].define(version: 20_260_329_173_100) do
     t.integer "comments_count", default: 0
     t.integer "likes_count", default: 0
     t.index ["creator_id"], name: "index_posts_on_creator_id"
-    t.index %w[postable_type postable_id], name: "index_posts_on_postable"
+    t.index ["postable_type", "postable_id"], name: "index_posts_on_postable"
   end
 
   create_table "profiles", force: :cascade do |t|
@@ -148,6 +144,7 @@ ActiveRecord::Schema[8.0].define(version: 20_260_329_173_100) do
     t.string "username"
     t.integer "followers_count", default: 0
     t.integer "follows_count", default: 0
+    t.boolean "online", default: false, null: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
