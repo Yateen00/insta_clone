@@ -69,7 +69,7 @@ end
 
 gem "devise", "~> 5.0"
 
-gem "omniauth-rails_csrf_protection", "~> 1.0"
+gem "omniauth-rails_csrf_protection", "~> 2.0"
 
 gem "omniauth-github", "~> 2.0"
 gem "omniauth-google-oauth2", "~> 1.2"

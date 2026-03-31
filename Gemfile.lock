@@ -255,7 +255,7 @@ GEM
     omniauth-oauth2 (1.9.0)
       oauth2 (>= 2.0.2, < 3)
       omniauth (~> 2.0)
-    omniauth-rails_csrf_protection (1.0.2)
+    omniauth-rails_csrf_protection (2.0.1)
       actionpack (>= 4.2)
       omniauth (~> 2.0)
     open3 (0.2.1)
@@ -525,7 +525,7 @@ DEPENDENCIES
   mini_magick (~> 5.1)
   omniauth-github (~> 2.0)
   omniauth-google-oauth2 (~> 1.2)
-  omniauth-rails_csrf_protection (~> 1.0)
+  omniauth-rails_csrf_protection (~> 2.0)
   pg (~> 1.1)
   propshaft
   puma (>= 5.0)
