@@ -3,7 +3,8 @@ class PostsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @posts = Post.all
+    # Optimized with eager loading and chronological sorting
+    @posts = Post.includes(:creator, :postable, :comments, :likes).order(created_at: :desc)
   end
 
   def show
@@ -32,7 +33,7 @@ class PostsController < ApplicationController
         return
       end
     end
-    render :new, status: :unprocessable_entity, alert: "Post creation failed"
+    render :new, status: :unprocessable_content, alert: "Post creation failed"
   end
 
   def update
@@ -51,7 +52,7 @@ class PostsController < ApplicationController
     if @post.update(post_params.except(:postable_attributes))
       redirect_to @post, notice: "Post updated successfully"
     else
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
   end
 

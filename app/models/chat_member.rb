@@ -10,8 +10,12 @@ class ChatMember < ApplicationRecord
     chat_room.messages.where("created_at > ?", last_read).count
   end
 
-  # Marks all messages as read up to now
+  # Marks all messages as read up to now and syncs across devices
   def mark_as_read!
     update!(last_read_at: Time.current)
+    ActionCable.server.broadcast("user_#{user_id}_channel", { 
+      event: "room_read", 
+      room_id: chat_room_id 
+    })
   end
 end

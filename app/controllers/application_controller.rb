@@ -8,6 +8,19 @@ class ApplicationController < ActionController::Base
   allow_browser versions: :modern
   before_action :configure_permitted_parameters, if: :devise_controller?
 
+  helper_method :chat_unread_count
+
+  def chat_unread_count
+    return 0 unless user_signed_in?
+    
+    @chat_unread_count ||= ChatRoom.joins(:chat_members)
+                                  .where(chat_members: { user_id: current_user.id })
+                                  .joins(:messages)
+                                  .where("messages.created_at > COALESCE(chat_members.last_read_at, chat_rooms.created_at)")
+                                  .distinct
+                                  .count("chat_rooms.id")
+  end
+
   protected
     def configure_permitted_parameters
       added_attrs = [:username, :email, :password, :password_confirmation, :remember_me]

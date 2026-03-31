@@ -2,7 +2,11 @@ class MessagesController < ApplicationController
   # GET /chat_rooms/:chat_room_id/messages
   def index
     chat_room = ChatRoom.find(params[:chat_room_id])
-    messages = chat_room.messages.includes(:user, :content)
+    # Seamless join for groups if the user isn't a member yet
+    chat_room.join_user!(current_user)
+
+    # Fetch last 100 messages to ensure performance in large chat rooms
+    messages = chat_room.messages.includes(:user, :content).order(created_at: :asc).last(100)
     render json: messages.as_json(include: { user: { only: %i[id username] }, content: {} })
   end
 
@@ -24,18 +28,18 @@ class MessagesController < ApplicationController
       # Broadcast to ActionCable specific room channel (for active chat viewers)
       ActionCable.server.broadcast(
         "chat_room_#{chat_room.id}_channel",
-        message: message.as_json(include: { user: { only: %i[id username] }, content: {} })
+        { message: message.as_json(include: { user: { only: %i[id username] }, content: {} }) }
       )
 
       # Broadcast to each member's personal channel (for navbar badge / sidebar updates)
       chat_room.users.each do |u|
-        next if u.id == current_user.id # don't notify the sender they have a new message
-
         ActionCable.server.broadcast(
           "user_#{u.id}_channel",
           {
             event: "new_message",
             room_id: chat_room.id,
+            # Broadcaster authoritative room snapshot with CURRENT user-specific unread count
+            room: chat_room.as_api_json(u),
             message: message.as_json(include: { user: { only: %i[id username] }, content: {} })
           }
         )

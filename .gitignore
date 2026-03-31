@@ -39,3 +39,8 @@
 .vscode
 public/uploads
 /node_modules
+
+# personal files for explanation
+react_architecture_guide.md
+how_to_use.md
+chat.md

@@ -40,10 +40,12 @@ Rails.application.routes.draw do
     collection do
       post :create_group
       get :unread_count
+      get :bootstrap
     end
     member do
       patch :mark_as_read
       post :join
+      post :add_members
     end
     resources :messages, only: %i[index create]
   end

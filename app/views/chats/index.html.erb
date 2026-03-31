@@ -1,3 +1,9 @@
 <% content_for :title, "Chats | Insta Clone" %>
 
+<% if @chat_bootstrap_data %>
+  <script id="chat-bootstrap-hydration" type="application/json">
+    <%= @chat_bootstrap_data.to_json.html_safe %>
+  </script>
+<% end %>
+
 <div id="chat-app-root" class="w-full h-full" data-current-user-id="<%= current_user.id %>"></div>
